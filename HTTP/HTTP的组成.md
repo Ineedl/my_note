@@ -5,7 +5,7 @@ HTTP请求报文由三部分组成。
 
 > 一个http请求报文实例
 
-![](https://note.youdao.com/yws/api/personal/file/09C5781AF36B4355B2A3D08A66E73E3A?method=download&shareKey=c0ebe1deb14dbed49e7ddc062fb606bd)
+![](./HTTP组成内容图片/http请求报文实例.jpg)
 
 
 上述中的1 2 3组成了请求行  
@@ -17,12 +17,12 @@ HTTP请求报文由三部分组成。
 一般请求体承载多个的传给服务器的数据。不但报文体可以传递请求参数，请求URL也可以通过类似于
 ```
     /chapter15/user.html? param1=value1&param2=value2
-```    
+```
 的方式传递请求参数。
 
 > http请求报文详细格式
 
-![](https://note.youdao.com/yws/api/personal/file/1D803870AEDE422B81BAC959335872DF?method=download&shareKey=e02e651b7eaa7e77add179ad43ac6253)
+![](./HTTP组成内容图片/http响应报文格式.png)
 
 ## HTTP响应报文
 HTTP请求的响应报文也由三部分组成。
@@ -31,7 +31,7 @@ HTTP请求的响应报文也由三部分组成。
 
 > 一个http响应报文实例
 
-![](https://note.youdao.com/yws/api/personal/file/E1E979CB80FC40B6B4BF75951B4CF2FC?method=download&shareKey=263441775117c208dc41b5cb39286d2a)
+![](./HTTP组成内容图片/http响应报文实例.jpg)
 
 上述中的1 2组成了响应行
 
@@ -44,7 +44,7 @@ HTTP请求的响应报文也由三部分组成。
 
 > http响应报文格式
 
-![](https://note.youdao.com/yws/api/personal/file/D7E25245DE874594A73C22DB07ACED83?method=download&shareKey=403d748f2428f37738d7ff9c75933cc6)
+![](./HTTP组成内容图片/http响应报文格式.png)
 
 ## 头域
 每个头域由一个域名，冒号（:）和域值三部分组成。域名是大小写无关的，域值前可以添加任何数量的空格符，头域可以被扩展为多行，在每行开始处，使用至少一个空格或制表符。
@@ -75,5 +75,4 @@ HTTP的头域包括通用头，请求头，响应头和实体头四个部分。
 > 实体头
 
 实体头字段可以用于请求消息或响应消息。实体头字段中包含消息实体正文的有关信息，如使用的编码格式。
-
 

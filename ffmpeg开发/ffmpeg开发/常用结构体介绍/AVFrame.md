@@ -27,7 +27,7 @@ u与v分量长度相等，为y分量长度一半对其。
 
 数字0表示填充的字节
 
-![](https://note.youdao.com/yws/api/personal/file/WEB89c410924db8cd4235a17efcf9e719ab?method=download&shareKey=6a239f6d93f89f74bb128979c8737b72)
+![](./图片/yuv420存储方式.jpeg)
 
 
 > int width, height：
