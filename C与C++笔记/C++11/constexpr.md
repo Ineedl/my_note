@@ -5,7 +5,7 @@ constexpr可以用于修饰函数，这个函数的返回值会尽可能在编�
 
 c++11中constexpr函数只能包含一个返回语句。
 
-```
+```c++
 #include<iostream>
 using namespace std;
 

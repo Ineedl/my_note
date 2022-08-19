@@ -3,14 +3,16 @@
 
 ### 传统null的定义
 
-    /* Define NULL pointer value */
-	#ifndef NULL
-		#ifdef __cplusplus					//c++	
-			#define NULL    0
-		#else  								//c语言定义
-			#define NULL    ((void *)0)
-		#endif  
+```c++
+/* Define NULL pointer value */
+#ifndef NULL
+	#ifdef __cplusplus					//c++	
+		#define NULL    0
+	#else  								//c语言定义
+		#define NULL    ((void *)0)
 	#endif  
+#endif  
+```
 
 使用传统的null定义，当某类中的单参数函数重载时，如果同时拥有整数数值类型和指针类型，当传入null时，可能执行的是整数数值类型参数的构造函数，从而造成错误。
 

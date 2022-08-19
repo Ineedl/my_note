@@ -36,10 +36,10 @@ find_path()     //查找指定文件的路径
 使用，初始为空，由用户设定，一般只使用第一个分号前的路径
 
 `例子`
-```
+```cmake
 set(CMAKE_PREFIX_PATH "D:/Qt/Qt5.9.9/5.9.9/mingw53_32")
 
-//注意分号间隔中的目录一定要加/
+#注意分号间隔中的目录一定要加/
 set(CMAKE_PREFIX_PATH "/Qt/Qt5.9.9/5.9.9/mingw53_32/;D:/Qt/;/bin1/;/bin2/;/bin3/;/bin4/")
 ```
 

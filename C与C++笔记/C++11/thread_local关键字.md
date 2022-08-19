@@ -1,7 +1,7 @@
 ## thread_local
 用thread_local修饰的变量具有thread周期，每一个线程都拥有并只拥有一个该变量的独立实例，一般用于需要保证线程安全的函数中。
 
-```
+```c++
 #include <iostream>
 #include <thread>
 

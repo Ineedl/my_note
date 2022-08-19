@@ -1,7 +1,7 @@
 ## final
 final用于标记在一个基类后面，表示该类无法被集成
 
-```
+```c++
 struct Base final {
     virtual void func() {
         cout << "base" << endl;
@@ -12,7 +12,7 @@ struct Derived : public Base{ // 编译失败，final修饰的类不可以被继
     void func() override {
         cout << "derived" << endl;
     }
-
+s
 };
 ```
 

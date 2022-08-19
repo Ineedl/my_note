@@ -2,11 +2,13 @@
 c++中lambda表达式最后被解析成了一个临时的仿函数对象，而非一个指向某个新建函数的指针。
 	例:
 	
-	auto p=[=](int x){return x+1;};
-	std::cout<<typeid(p).name()<<std::endl;   //输出结果虽然看不懂,但是很明显并不是一个函数指针
-	//类型全称为main()::lambda(参数列表)
-	//哪个函数定义的前面就是哪个函数,此处例子lambda表达式定义在main函数
-	
+```c++
+auto p=[=](int x){return x+1;};
+std::cout<<typeid(p).name()<<std::endl;   //输出结果虽然看不懂,但是很明显并不是一个函数指针
+//类型全称为main()::lambda(参数列表)
+//哪个函数定义的前面就是哪个函数,此处例子lambda表达式定义在main函数
+```
+
 * lambda表达式可以使用类型推导
 
 * lambda表达式如果要传给一个函数，必须用std::function包装，或者该函数是泛型函数
@@ -14,7 +16,9 @@ c++中lambda表达式最后被解析成了一个临时的仿函数对象，而�
 ## lambda表达式格式
 ### 格式介绍
 
-    [captrueList] ([parameterList]) [mutable] [noexcept]/[throw([exceptionType],...)]-> [returnType]/[decltype表达式] { <functionBody>}
+```c++
+[captrueList] ([parameterList]) [mutable] [noexcept]/[throw([exceptionType],...)]-> [returnType]/[decltype表达式] { <functionBody>}
+```
 
 ##### captrueList	
 捕获列表，必须出现在表达式开始，用于捕获上下文变量；
@@ -29,11 +33,13 @@ mutable可以改变函数常量性，如果使用mutable，参数列表不可省
 
 例：
     
-    int a=6;
-    auto p=[a]()->int{a=1;return a;};
-    std::cout<<p();//报错
-    auto d=[a]()mutable->int{a=1;return a;};
-    std::cout<<p();//不报错
+```c++
+int a=6;
+auto p=[a]()->int{a=1;return a;};
+std::cout<<p();//报错
+auto d=[a]()mutable->int{a=1;return a;};
+std::cout<<p();//不报错
+```
 
 
 
@@ -50,8 +56,10 @@ lambda表达式返回值的类型，也可以使用decltype推导
 
 ##### 一个复杂的的例子
 
-    auto p=[=](int p)mutable throw(int,char)->decltype(1+1){return p+8;};
-	
+```c++
+auto p=[=](int p)mutable throw(int,char)->decltype(1+1){return p+8;};
+```
+
 ### 捕获列表详解
 |捕获列表形式|作用|
 |:--|:--|
@@ -76,18 +84,20 @@ lambda表达式返回值的类型，也可以使用decltype推导
 
 例：
 
-	int a=4;
-	char b;
-	int c;
-	int d;
-	auto p=[a,b,c,d]()->int{return 2;};
-	std::cout<<sizeof(p)<<std::endl;
-	
-	//p2大小为16但p1,p大小均为类的最小默认值1
-	auto p1=[=]()->int{return 3;};
-	std::cout<<sizeof(p1)<<std::endl;
-	
-	auto p2=[a,b,c,d]()->int{return a+(int)b+c+d;};
-	std::cout<<sizeof(p2)<<std::endl;
-	
+```c++
+int a=4;
+char b;
+int c;
+int d;
+auto p=[a,b,c,d]()->int{return 2;};
+std::cout<<sizeof(p)<<std::endl;
+
+//p2大小为16但p1,p大小均为类的最小默认值1
+auto p1=[=]()->int{return 3;};
+std::cout<<sizeof(p1)<<std::endl;
+
+auto p2=[a,b,c,d]()->int{return a+(int)b+c+d;};
+std::cout<<sizeof(p2)<<std::endl;
+```
+
 c++引用的原理实质上相当于一个指针所以引用大小和指针是一致的,所以lambda表达式同理,传入引用的大小等同传入当前环境下指针的大小。

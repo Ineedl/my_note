@@ -1,7 +1,7 @@
 ## sizeof新增
 c++11后sizeof可以使用在成员上，而不需要类的对象
 
-```
+```c++
 struct A {
     int data[10];
     int a;
@@ -12,3 +12,4 @@ int main() {
     return 0;
 }
 ``
+```

@@ -1,5 +1,5 @@
 ## for
-```
+```c++
 vector<int> vec;
 
 for (auto iter = vec.begin(); iter != vec.end(); iter++) { // before c++11

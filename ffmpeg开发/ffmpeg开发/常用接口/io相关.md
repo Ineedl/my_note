@@ -2,7 +2,7 @@
 
 > 原型
 
-```
+```C++
 int avformat_open_input(
     AVFormatContext **ps, 
     const char *url,
@@ -28,5 +28,4 @@ url：打开的视音频流的URL。
 fmt：强制指定AVFormatContext中AVInputFormat的。这个参数一般情况下可以设置为NULL，这样FFmpeg可以自动检测AVInputFormat。
 
 dictionay：附加的一些选项，一般情况下可以设置为NULL。
-
 

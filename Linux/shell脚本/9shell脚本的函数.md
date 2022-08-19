@@ -10,12 +10,14 @@ function用于在当前shell中或是shell脚本中定义一个shell函数，该
 
 > 格式
 
-    function fun_name [()]
-    {
-           command1
-           command2
-           ...        
-    }
+```bash
+function fun_name [()]
+{
+       command1
+       command2
+       ...        
+}
+```
 
 * 括号可有可无
 
@@ -35,7 +37,9 @@ bash shell会把函数当作一个小型脚本，运行结束时会返回一个�
 `使用return返回`  
 bash shell使用return命令来退出函数并返回特定的退出状态码。return命令允许指定一个整数值来定义函数的退出状态码，从而提供了一种简单的途径来编程设定函数退出状态码。
 
-    return value
+```bash
+return value
+```
 
 * return只能用于脚本中。
 
@@ -48,54 +52,62 @@ bash shell使用return命令来退出函数并返回特定的退出状态码。r
 `函数输出的使用`  
 直接使用
 
-    value_name=$(fun_name)
-    //或
-    value_name=$?
-    
+```bash
+value_name=$(fun_name)
+#或
+value_name=$?
+```
+
 在函数末尾使用echo传递返回值
 
-    //一个脚本例子
-    
-    function dbl { 
-        read -p "Enter a value: " value
-        echo $[ $value * 2 ] 
-    }
-    result=$(dbl)
-    echo "The new value is $result"
-    
+```bash
+#一个脚本例子
+
+function dbl { 
+    read -p "Enter a value: " value
+    echo $[ $value * 2 ] 
+}
+result=$(dbl)
+echo "The new value is $result"
+```
+
 * 通过这种方法，还可以返回浮点值和字符串值，也可以返回数组。
 
 
-    //返回数组脚本实例
-    #!/bin/bash 
-    # returning an array value 
-    function arraydblr { 
-        local origarray 
-        local newarray 
-        local elements 
-        local i 
-        origarray=($(echo "$@")) 
-        newarray=($(echo "$@")) 
-        elements=$[ $# - 1 ] 
-        for (( i = 0; i <= $elements; i++ )) 
-        { 
-            newarray[$i]=$[ ${origarray[$i]} * 2 ] 
-        } 
-        echo ${newarray[*]} 
-    }
+```bash
+#返回数组脚本实例
+#!/bin/bash 
+# returning an array value 
+function arraydblr { 
+    local origarray 
+    local newarray 
+    local elements 
+    local i 
+    origarray=($(echo "$@")) 
+    newarray=($(echo "$@")) 
+    elements=$[ $# - 1 ] 
+    for (( i = 0; i <= $elements; i++ )) 
+    { 
+        newarray[$i]=$[ ${origarray[$i]} * 2 ] 
+    } 
+    echo ${newarray[*]} 
+}
 
-    myarray=(1 2 3 4 5) 
-    echo "The original array is: ${myarray[*]}" 
-    arg1=$(echo ${myarray[*]}) 
-    result=($(arraydblr $arg1)) 
-    echo "The new array is: ${result[*]}"
+myarray=(1 2 3 4 5) 
+echo "The original array is: ${myarray[*]}" 
+arg1=$(echo ${myarray[*]}) 
+result=($(arraydblr $arg1)) 
+echo "The new array is: ${result[*]}"
+```
 
 > 函数的参数与使用
 
 `传参`  
 bash shell会把函数当作一个小型脚本，可以像普通脚本那样向函数传递参数。
 
-    fun_name [args]
+```bash
+fun_name [args]
+```
 
 `使用参数`  
 使用参数使用$n来调用对应的传入参数，$0为函数名
@@ -103,24 +115,28 @@ bash shell会把函数当作一个小型脚本，可以像普通脚本那样向�
 `local`  
 local用于定义一个不会在环境变量中产生而是只能在函数中使用的变量
 
-    local var_name
-    
+```bash
+local var_name
+```
+
 * local只能在脚本中使用
 
 ### 在当前shell中定义函数
 
 `格式`
 
-    //多行
-    > function fun_name [()]
-    > {
-    >       command1
-    >       command2
-    >       ...        
-    > }
-    
-    //单行
-    > function fun_name [()]{command1;command1;command1;...}
+```bash
+#多行
+> function fun_name [()]
+> {
+>       command1
+>       command2
+>       ...        
+> }
+
+#单行
+> function fun_name [()]{command1;command1;command1;...}
+```
 
 * 在shell中直接定义函数必须使用{}作为函数分界符，EOF什么的不行
 
@@ -130,25 +146,31 @@ local用于定义一个不会在环境变量中产生而是只能在函数中使
 
 函数定以后在用set查询时会以以下方式列出
 
-    fun_name () 
-    { 
-        command1
-        command2
-        ...   
-    }
+```bash
+fun_name () 
+{ 
+    command1
+    command2
+    ...   
+}
+```
 
 `定义函数的使用`  
 linux shell将函数当做一个小型脚本来使用，故在使用函数时可以像其他命令一样在后面传入参数来进行使用
 
-    > fun_name  [args]
-    
+```bash
+> fun_name  [args]
+```
+
 * 使用函数的时候不需要加括号
 
 
 
 `删除在shell中的函数`
 
-    unset 函数名
+```bash
+unset 函数名
+```
 
 `函数的返回值的使用与return同在脚本中的使用`
 
@@ -161,50 +183,60 @@ shell脚本单独存放函数的脚本为函数库，shell脚本函数的定义�
 ### source命令
 source命令将会重新运行一个shell脚本，在脚本中则是在当前位置运行该shell脚本
 
-    source 脚本文件的路径
-    
-    . 脚本文件的路径
+```bash
+source 脚本文件的路径
+
+. 脚本文件的路径
+```
 
 * source的别名是.
 
 `函数库的使用`
 
-    source 函数文件的路径
-    //或
-    . 函数文件的路径
-    
+```bash
+source 函数文件的路径
+#或
+. 函数文件的路径
+```
+
 * 该原理是相当于把对应脚本在source的位置重新运行了一遍，但是由于函数库脚本中只存放了函数的定义。所以看上去只是加载了该函数库
 
 
-    例：
-    //myfuncs.sh
-    function addem { 
-        echo $[ $1 + $2 ] 
-    } 
-    function multem { 
-        echo $[ $1 * $2 ] 
-    } 
-    function divem { 
-        if [ $2 -ne 0 ] 
-        then 
-        echo $[ $1 / $2 ] 
-        else 
-        echo -1 
-        fi 
-    }
-    
-    
-    //test.sh
-    #!/bin/bash 
-    # using functions defined in a library file 
-    . ./myfuncs         #此处加载了函数库脚本
-    value1=10 
-    value2=5 
-    result1=$(addem $value1 $value2) 
-    result2=$(multem $value1 $value2) 
-    result3=$(divem $value1 $value2) 
-    echo "The result of adding them is: $result1" 
-    echo "The result of multiplying them is: $result2" 
-    echo "The result of dividing them is: $result3"
+```bash
+例：
+#myfuncs.sh
+function addem { 
+    echo $[ $1 + $2 ] 
+} 
+function multem { 
+    echo $[ $1 * $2 ] 
+} 
+function divem { 
+    if [ $2 -ne 0 ] 
+    then 
+    echo $[ $1 / $2 ] 
+    else 
+    echo -1 
+    fi 
+}
+```
 
-    
+
+​    
+```bash
+#test.sh
+#!/bin/bash 
+# using functions defined in a library file 
+. ./myfuncs         #此处加载了函数库脚本
+value1=10 
+value2=5 
+result1=$(addem $value1 $value2) 
+result2=$(multem $value1 $value2) 
+result3=$(divem $value1 $value2) 
+echo "The result of adding them is: $result1" 
+echo "The result of multiplying them is: $result2" 
+echo "The result of dividing them is: $result3"
+```
+
+
+​    

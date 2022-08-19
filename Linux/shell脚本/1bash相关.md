@@ -1,5 +1,7 @@
 ## bash命令
-    bash [参数]
+```bash
+bash [参数]
+```
 
 常用参数：
     
@@ -8,8 +10,9 @@
     -l              该shell以登录shell的形式启动
     -r              启动一个受限的交互式非登录shell，用户无法离开启动shell的目录
     -s              启动一个交互式非登录shell并从stdin中读取命令，但是一般电脑的stdin为键盘，故该方式常为默认启动方式。
-    
-    
+
+
+​    
 ### shell的三种
 * 交互式登录：该shell在启动时会从用户配置文件中读取配置信息再启动shell。
 
@@ -20,15 +23,17 @@
 ## 进程列表
 在shell中输入()并在其中输入用;分隔的命令集，将会生成一个子shell用于执行这些命令
 
-    //不会生成子shell
-    pwd ; ls ; echo $BASH_SUBSHELL
-    
-    //会生成子shell
-    (pwd ; ls ; echo $BASH_SUBSHELL)
-    
-    //会生成子shell
-    variable=`echo $BASH_SUBSHELL`
-    
+```bash
+#不会生成子shell
+pwd ; ls ; echo $BASH_SUBSHELL
+
+#会生成子shell
+(pwd ; ls ; echo $BASH_SUBSHELL)
+
+#会生成子shell
+variable=`echo $BASH_SUBSHELL`
+```
+
 
 ## 查看是否生成子shell
 
@@ -54,4 +59,7 @@ linux中不管是shell脚本还是shell中，当需要在一个命令中输入�
 
 `例子`
     
-    trap "echo ' Sorry! I have trapped Ctrl-C'" SIGINT
+
+```bash
+trap "echo ' Sorry! I have trapped Ctrl-C'" SIGINT
+```

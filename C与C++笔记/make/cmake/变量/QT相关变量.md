@@ -2,7 +2,7 @@
 
 是否为Qt目标自动处理 moc
 
-```
+```cmake
 set(CMAKE_AUTOMOC ON)
 ```
 
@@ -16,7 +16,7 @@ set(CMAKE_AUTORCC ON)
 
 是否为Qt目标自动处理ui文件
 
-```
+```cmake
 set(CMAKE_AUTOUIC ON)
 ```
 
@@ -24,7 +24,7 @@ set(CMAKE_AUTOUIC ON)
 
 设置自动uic时的搜索目录
 
-```
+```cmake
 set(CMAKE_AUTOUIC_SEARCH_PATHS /a /b /c)
 ```
 

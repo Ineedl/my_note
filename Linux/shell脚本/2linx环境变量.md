@@ -1,7 +1,7 @@
 ## 环境变量相关命令
 
 * 查看当前shell中的全局环境变量
-    
+  
     env
 
 * 查看当前shell中的全部的环境变量(局部与全局都有)
@@ -25,50 +25,62 @@
 ## 环境变量的定义
 `局部环境变量的定义`
 
-    //含空格以及特殊字符
-    var_name="value"
+```bash
+#含空格以及特殊字符
+var_name="value"
 
-    //不含特殊字符
-    var_name=value
-    
+#不含特殊字符
+var_name=value
+```
+
 `全局环境变量的定义`
 
-    //含空格以及特殊字符
-    export var_name="value"
-    
-    //不含特殊字符
-    export var_name=value
+```bash
+#含空格以及特殊字符
+export var_name="value"
+
+#不含特殊字符
+export var_name=value
+```
 
 * shell中变量定义如果要加入"等有些特殊字符需要使用\转义。
-    
+  
 * shell定义的全局环境变量在定义shell关闭时会自动关闭。系统中的shell环境变量为开机时开机脚本自动加载的。
 
 * 如果想要永久定义一个全局环境变量(一般定义永久的局部变量没用)，需要在对应的开机脚本中加入定义式。
-    
+  
 ## 只读环境变量的声明
 变量需要定义了才能声明为只读环境变量
 
-    readonly var_name
-    
+```bash
+readonly var_name
+```
+
 * 只读环境变量无法删除与更改，只能关闭当前shell或是重新启动后才会删除。
 
 ## 环境变量的调用
 
-    //使用的环境变量后没有紧贴其他字符时
-    $var_name
-    
-    //使用的环境变量后紧贴其他字符时
-    ${var_name}
-    
+```bash
+#使用的环境变量后没有紧贴其他字符时
+$var_name
+
+#使用的环境变量后紧贴其他字符时
+${var_name}
+```
+
 `给环境变量赋值时也可以调用环境变量`
 
-    export PATH=$PATH:/usr/bin
-    
+```bash
+export PATH=$PATH:/usr/bin
+```
+
 
 ## 环境变量的删除
 
-    unset var_name var_name2 ...
-    
+```bash
+unset var_name var_name2 ...
+```
+
 ## linux shell重要配置文件
 以下这五个配置文件在bash shell作为登录shell启动时会加载他们中的内容。
 
@@ -81,8 +93,9 @@
     $HOME/.bash_login
     
     $HOME/.profile
-    
-    
+
+
+​    
 * 所有linux发行版都有第一个配置文件，但是剩下的四个一般linux发行版都只有其中的一个到两个
 
 * 大多数linux发行版使用$HOME/.bashrc文件来存储个人用户的永久性shell变量。
@@ -94,29 +107,35 @@
 
 `数组的赋值`
 
-    //统一初始化，该方法会覆盖之前同名数组
-    array_name=(value1 value2 value3 value4 ...)
-    
-    //暂时只给某个位置赋值
-    //该赋值方法不需要数组已完成定义与全部赋值，但是如果其他下标对应位置中没有值，则默认为空
-    array_name[index]=value
-    
+```bash
+#统一初始化，该方法会覆盖之前同名数组
+array_name=(value1 value2 value3 value4 ...)
+
+#暂时只给某个位置赋值
+#该赋值方法不需要数组已完成定义与全部赋值，但是如果其他下标对应位置中没有值，则默认为空
+array_name[index]=value
+```
+
 `数组的调用`
 
-    //调用某个成员
-    ${array_name[index]}
-    
-    //调用全部成员并且以空格分隔
-    ${array_name[*]}
+```bash
+#调用某个成员
+${array_name[index]}
+
+#调用全部成员并且以空格分隔
+${array_name[*]}
+```
 
 `数组的删除`
 
-    //删除整个数组
-    unset array_name
-    
-    //删除数组中某个位置
-    unset array_name[index]
-    
+```bash
+#删除整个数组
+unset array_name
+
+#删除数组中某个位置
+unset array_name[index]
+```
+
 ## 部分重要环境变量
 > IFS(内部字段分隔符)  
 
@@ -136,7 +155,7 @@ IFS环境变量定义了bash shell用作字段分隔符的一系列字符。默�
 * 注意IFS的的改变也会影响脚本输出(如果某个变量的值刚好是这个分隔符，则该变量的输出将会是空)，比如如果将123当做分隔符，那么输出中将不会再出现123这三个字符。
 
 ## shell脚本特殊环境变量
-| 环境变量<div style="width: 45pt"> | 意义 |
+| <span style="display:inline-block;width: 80px"> 环境变量</span> | 意义 |
 |:--|:--|
 | $0 | 脚本名 |
 | $n | 第n个脚本输入参数 |
@@ -152,23 +171,26 @@ IFS环境变量定义了bash shell用作字段分隔符的一系列字符。默�
 shift命令可以用来左移shell中输入参数的位置，后面的数字为移动的数量。
 `格式`
 
-    shift n
-    
+```bash
+shift n
+```
+
 `例子`
 
-    #!/bin/bash
-    #name:a.sh
-    echo $1
-    shift 2
-    echo $2
-    
-    ./a.sh 1 2 3
-    
-    out: 
-    1
-    2
-    
+```bash
+#!/bin/bash
+#name:a.sh
+echo $1
+shift 2
+echo $2
+
+./a.sh 1 2 3
+
+out: 
+1
+2
+```
+
 * shift不能移动第0位的参数，即脚本名那个位置。
-    
-    
+  
     

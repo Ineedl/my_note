@@ -64,7 +64,7 @@ QT的选择器可以各种混合使用，非常的自由
 
 ### 类选择器  
 . + 类名 或者 . + class的属性值作为选择器，只会作用于它自己，它的子类与子控件不受影响。  
-  
+
 ### ID选择器
 #+objectName 作为选择器，只作用于用此 objectName 的对象。 不会作用于除了该类以外的对象。
 
@@ -79,7 +79,7 @@ QPushButton[level="dangerous"] { background: magenta; }
 详情见property与setProperty
 
 该样式被同意设置后不会影响其子控件与子类
-  
+
 ### 后代选择器
 选择器之间用空格隔开，改样式只要前面控件的后代中有排最后一个控件的对象。
 注意，QT中已有控件中，某些控件是一些子控件组成的，像下面这样这样是可以让该控件中子控件生效的。
@@ -87,7 +87,7 @@ QPushButton[level="dangerous"] { background: magenta; }
     主控件 子控件{
         样式;
     }
-    
+
 
 其他一些例例：  
     QWidget QPushButton{  
@@ -140,14 +140,16 @@ QFrame > QWidget > QPushButton
 
 例：  
 
-    QCheckBox::indicator {  
-        width: 20px;  
-        height: 20px;  
-    }    
-    
-    QCheckBox {  
-    spacing: 8px;  
-    }
+```
+QCheckBox::indicator {  
+    width: 20px;  
+    height: 20px;  
+}    
+
+QCheckBox {  
+spacing: 8px;  
+}
+```
 
 更多的Subcontrol详情请看QT助手  
 
@@ -299,7 +301,7 @@ fixed	当页面的其余部分滚动时，背景图像不会移动。
 
 #### background-clip：设置元素的背景（背景图片或颜色）是否延伸到边框下面。  
 该属性和margin与padding一起使用效果很明显
-  
+
 margin  填充满到外边框处。   
 border  默认情况。(设置了padding和margin后的原边框位置处，相当于padding)   
 padding 填充满到内边框处。  
@@ -341,7 +343,7 @@ border-left
 border-left-color  
 border-left-style  
 border-left-width  
-  
+
 #### border-image：边框图片
 选择的图片会扩充直到边框处。  
 
@@ -359,7 +361,7 @@ border-bottom-left-radius           右下角
 border-radius                   所有脚
 
 使用加单位的数字(pt,px等)，不加单位的数字都可以，能调整到想要的弧度就行。  
-  
+
 官方解释如下:  
 长度的一两次出现。如果只指定了一个长度，它将被用作定义角的四分之一圆的半径。如果指定了两个长度，则第一个长度是四分之一椭圆的水平半径，而第二个长度是垂直半径。
 
