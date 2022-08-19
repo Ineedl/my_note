@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--使用连接池的一个数据库数据源-->
+    <bean id="myDataSource"
+          class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init"
+          destroy-method="close">
+        <property name="url" value="jdbc:mysql://localhost:3306/test" />
+        <property name="username" value="root" />
+        <property name="password" value="zxc563221659" />
+        <property name="maxActive" value="20" />
+
+    </bean>
+
+	<!--其他bean-->
+
+    <!--使用Spring的事务管理-->
+    <!--声明事务管理器-->
+    <bean id="MysqlTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--需要指定数据源-->
+        <property name="dataSource" ref="myDataSource" />
+    </bean>
+
+    <!--
+    开启事务注解驱动
+    此处告诉Spring要使用注解的方式来完成事务，要创建事务代理对象
+    -->
+    <!--给他事务管理器id-->
+    <tx:annotation-driven transaction-manager="MysqlTransactionManager" />
+
+
+</beans>

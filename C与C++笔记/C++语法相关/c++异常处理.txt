@@ -1,0 +1,101 @@
+throw用法
+1.跟在函数后面,指定只允许抛出的异常种类(函数声明和定义时都要加,该异常不是一定会抛出)
+
+	3种类型
+	1.只允许抛出对应类型的异常(该类型可以多个也可以只有一个)
+		void test_funtion_1() throw(int,char);
+	2.不允许抛出异常
+		void test_funtion_1() throw();
+	3.允许抛出任何异常
+		void test_funtion_1() throw(...);
+		
+	如果函数抛出了规定的异常以外的异常,运行时则会可能出现以下类型的报错(大部分都这样)
+	terminate called after throwing an instance of 'type'	(type为没有事先允许而抛出的异常的类型)
+	例:
+		如果void test_funtion_1() throw(int,char);中抛出double类型的异常则可能会出现运行报错
+	terminate called after throwing an instance of 'double'
+	
+	如果出现了无法捕获的异常(catch中没有对应捕获或者该函数根本就没有try与catch语句),那么也可能会出现上面报错
+	terminate called after throwing an instance of 'type'	(type为没有被捕获的异常的类型)
+
+2.在函数中使用,声明该函数在此处抛出了一个异常
+	
+	1.直接抛出异常
+	throw	对应异常的值或者对象	//(对象其实也是一种值)
+	例:
+		抛出值类型
+		throw 1;
+		throw 'a';
+		throw "abcde";
+		
+		抛出对象
+		string a="abde";
+		throw a;
+	2.向上层再抛出异常
+	例:
+		try {
+			if( salary < 0 )
+				throw string("zero salary");
+			cout << "counting tax" << endl;
+		}
+		catch (string s ) {
+			cout << "CountTax error : " << s << endl;
+			throw; //继续抛出捕获的异常给上层调用函数处理
+		}
+		
+	注意：1.抛出的异常类型可以是指针
+		
+异常对象的生命周期
+	1.在throw语句后写上异常对象时，throw先通过拷贝构造函数构造一个新对象，再把该新对象传递给 catch.对于一般变量也是这个操作
+	2.使用指针传递一般变量或对象来传递异常目标时,注意对象和变量的生存周期,虽然一般传递栈上的变量可以收到,但是不建议使用这个方法
+	(只是侥幸程序处理器因为节省时间没有去做释放空间这个操作,传递栈上变量指针之后会变成野指针,这个在传递对象指针的时候野指针出错尤为明显)
+	
+异常处理语句
+	try{
+		....
+		....
+	}
+	catch (type 会在该catch中使用的变量或者对象)
+	{
+		....
+	}
+	catch (type 会在该catch中使用的变量或者对象)
+	{
+		....
+	}
+	....
+	catch (...)	//无法在上述catch中捕获的异常都会在这里被捕获
+	{
+		....
+	}
+
+C++标准异常类
+	std::exception			所有异常类的父类,定义新的异常时,可以通过继承该类来实现定义新的异常,
+	
+		std::bad_alloc			new时,内存分配不够会出现该异常
+		
+		std::bad_cast			使用dynamic_cast运算符转换类型失败时引发该异常
+		
+		std::bad_typeid			使用typeid运算符获取目标类型时,若无法获取或是参数为NULL将会抛出该异常
+	
+		std::logic_error		抛出 在程序开始执行之前,可以读取程序来判断出现逻辑错误处 的异常(逻辑错误)
+				
+			std::domain_error			专业领域范畴内的错误,可以自己定义范围(比如你定义一个变量的值,你需要他在[1,10)之间,如果超过这个值,抛出该异常)
+			
+			std::invalid_argument		使用了无效参数(比如对一个NULL进行对应的对象操作等)会抛出该异常
+			
+			std::length_error			string类型过长时,抛出该异常
+			
+			std::out_of_range			使用了一个超出有效范围的值会抛出的异常(比如数组下标越界)
+			
+		std::runtime_error		抛出 在程序运行时才能检测到的异常,读代码无法检测出 的异常
+		
+			std::overflow_error			发生数据上溢抛出该异常
+			
+			std::range_error			存储超过数据范围的值时,抛出该异常(比如目标类型无法表示计算结果的情况)
+			
+			std::underflow_error		放生数据下溢抛出该异常
+			
+		std::bad_exception		在无法确定会抛出哪些 标准异常 时就可以直接捕获该异常来捕获无法确定的异常
+			
+		

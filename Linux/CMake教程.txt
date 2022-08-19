@@ -1,0 +1,90 @@
+CMake配置文件名CMakeLists.txt
+
+# CMake 最低版本号要求
+cmake_minimum_required (VERSION 2.8)
+
+# 项目信息(不是生成文件名)
+project (Demo1)
+
+#添加pthread链接库到项目Demo
+target_link_libraries(Demo pthread)
+
+#添加项目中的子目录(会让该目录下的源码和文件和CMakeLists.txt也被处理)
+add_subdirectory(son_directory)
+
+#指定生成目标(当然多个文件)
+add_executable(Demo main.cc)
+
+#将某个目录下的所有文件名存入一个变量(除了.和..,相当于shell中的$@一样)
+aux_source_directory(DIR value)
+
+#生成静态链接库
+add_library (MathFunctions ${DIR_LIB_SRCS})		//将变量中的全部文件编译并生成一个静态链接库
+
+单目标
+
+add_executable(Demo main.cc)		//可以用变量
+
+
+#多目标(某个目录下的所有文件)
+
+./Demo2
+    |
+    +--- main.cc
+    |
+    +--- MathFunctions.cc
+    |
+    +--- MathFunctions.h
+	
+	方法1:
+	add_executable(Demo main.cc MathFunctions.cc)
+
+
+	方法2:
+	#将目录下所有的文件存入一个变量,之后指定生成目标
+	aux_source_directory(<dir> <variable>)
+	add_executable(Demo ${variable})
+	例：
+		aux_source_directory(. DIR_SRCS)
+		add_executable(Demo ${DIR_SRCS})
+
+#多目标(多个目录,多个源文件)
+	将子目录中的文件编译成静态库来连接main函数文件
+	./Demo3
+    |
+    +--- main.cc
+    |
+    +--- math/
+          |
+          +--- MathFunctions.cc
+          |
+          +--- MathFunctions.h
+		  
+	根目录中的CMake配置文件
+	# CMake 最低版本号要求
+	cmake_minimum_required (VERSION 2.8)
+
+	# 项目信息
+	project (Demo3)
+
+	# 查找当前目录下的所有源文件
+	# 并将名称保存到 DIR_SRCS 变量
+	aux_source_directory(. DIR_SRCS)
+
+	# 添加 math 子目录
+	add_subdirectory(math)			//这样 math 目录下的 CMakeLists.txt 文件和源代码也会被处理 
+
+	# 指定生成目标 
+	add_executable(Demo main.cc)
+
+	# 添加链接库
+	target_link_libraries(Demo MathFunctions)
+	
+	子目录(math中的)
+	# 查找当前目录下的所有源文件
+	# 并将名称保存到 DIR_LIB_SRCS 变量
+	aux_source_directory(. DIR_LIB_SRCS)
+
+	# 生成链接库
+	add_library (MathFunctions ${DIR_LIB_SRCS})
+

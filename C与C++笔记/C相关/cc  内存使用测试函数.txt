@@ -1,0 +1,22 @@
+#include<malloc.h>
+size_t _msize( void *memblock );
+查看指针memblock指向空间分配的大小。
+
+#include<stdlib.h>
+void *malloc(size_t size);			//堆上分配
+
+void free(void* memblock );			//清理空间
+
+填写内存
+<string.h>
+void *memset(void *s, int v, size_t n);
+
+c++ 全局operator new
+
+void *operator new(size_t);
+
+void *operator new[](size_t);
+
+void *operator delete(void*);
+
+void *operator delete[](void*);
