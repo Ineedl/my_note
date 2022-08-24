@@ -14,7 +14,7 @@ ffprobe <file_name> -show_streams -select_streams <v/a> -print_format json
 ```
 
 ## 常用选项
-| 选项<div style="width: 200pt"> | 含义 |
+| 选项 | 含义 |
 | :------| :------ |
 |-print_format 	<writer_name>|设置输出打印格式。|
 |-show_streams|	显示包含在输入多媒体流中的每个媒体流的信息。|
