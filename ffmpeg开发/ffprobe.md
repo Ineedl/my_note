@@ -3,6 +3,8 @@ ffprobe从多媒体流收集信息，然后以人可读和机器可读的方式�
 
 ffprobe每个参数对应的打印都会在一个专门的字段内显示。
 
+* ffprobe显示的信息只提供参考，该信息并不是在播放时会绝对保证的。
+
 ## 查看文件流信息并以json格式显示
 ```
 ffprobe <file_name> -show_streams -print_format json
@@ -14,7 +16,7 @@ ffprobe <file_name> -show_streams -select_streams <v/a> -print_format json
 ```
 
 ## 常用选项
-| 选项<div style="width: 200pt"> | 含义 |
+| <span style="display:inline-block;width: 400px">选项</span> | 含义 |
 | :------| :------ |
 |-print_format 	<writer_name>|设置输出打印格式。|
 |-show_streams|	显示包含在输入多媒体流中的每个媒体流的信息。|
