@@ -25,7 +25,7 @@ ffplay videoOrAudio_file_name
 |右键在画面中横向拖动|进度条拖动|
 
 ## 常用选项
-| 选项 | 含义 |
+| <span style="display:inline-block;width: 200px">选项</span> | 含义 |
 | :------| :------ |
 |-x w|强行规定宽(不改变原有视频播放比例)|
 |-y h|强行规定高|
@@ -44,3 +44,19 @@ ffplay videoOrAudio_file_name
 |-showmode mode|设置显示模式，可用的模式值：0 显示视频，1 显示音频波形，2 显示音频频谱。缺省为0，如果视频不存在则自动选择2|
 |-vf filtergraph|设置视频滤镜|
 |-af filtergraph|设置音频滤镜|
+|-f <fmt>|强制使用规定的格式解析文件|
+
+## 常用
+
+> 播放yuv集合
+
+```bash
+ffplay -video_size width*hight yuv集合文件路径
+```
+
+> 播放pcm音频
+
+```bash
+ffplay -ar <采样频率> -f f32le pcm文件路径
+```
+

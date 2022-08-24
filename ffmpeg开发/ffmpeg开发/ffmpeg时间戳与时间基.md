@@ -6,7 +6,7 @@
 
 封装格式不同、数据状态不同、时间基不同。
 
-例如原始数据(YUV)的时间基time_base = AVRational{1，25}，压缩后的数据对应的时间基是time_base = AVRational{1，90000}。
+例如原始数据(YUV)的时间基time_base = AVRational{1，25}，压缩后的数据对应的时间基就可能是time_base = AVRational{1，90000}。
 
 time_base=AVRational{1，25}，表示该刻度中1个时间基为40ms。
 
