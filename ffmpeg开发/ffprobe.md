@@ -16,7 +16,11 @@ ffprobe <file_name> -show_streams -select_streams <v/a> -print_format json
 ```
 
 ## 常用选项
+<<<<<<< HEAD
+| 选项 | 含义 |
+=======
 | <span style="display:inline-block;width: 400px">选项</span> | 含义 |
+>>>>>>> c1274add2561bbbff2ed1ab5a1b9a7f9f6e70532
 | :------| :------ |
 |-print_format 	<writer_name>|设置输出打印格式。|
 |-show_streams|	显示包含在输入多媒体流中的每个媒体流的信息。|
