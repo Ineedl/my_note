@@ -267,3 +267,52 @@ git reset -–hard HEAD^^										//回退到上上个版本
 git diff [提交id_1/分支1] [提交id_2/分支2]
 ```
 
+
+
+
+
+## tag相关
+
+> 切换到某个tag
+
+```bash
+git checkout <tag_name>
+```
+
+> 列出所有的tag
+
+```bash
+git tag
+```
+
+> 将某次提交打成一个tag
+
+```bash
+git tag <tag_name> <commit id value>
+```
+
+
+> 删除某个标签
+
+```bash
+git tag -d <tag_name>
+```
+
+> 推送某一个tag到某个远程仓库
+
+```bash
+git push <remote> <tag_name>
+```
+
+> 推送所有标签到远程仓库
+
+```bash
+git push <remote> --tags
+```
+
+> 删除远程仓库中的某个标签
+
+```bash
+git push <remote> --delete <tag_name>
+```
+

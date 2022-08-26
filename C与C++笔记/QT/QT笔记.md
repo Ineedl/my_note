@@ -27,7 +27,7 @@
 * [带滚动条的QWidget&emsp;&emsp;QScrollArea//未完成](#qscrollarea)  
 
 * [文件类&emsp;&emsp;QFile](#qfile)  
- 
+
 * [单字节数据类&emsp;&emsp;QByteArray](#qbytearray)    
 
 * [界面切换类(界面栈)&emsp;&emsp;QStackedWidget](#qstackedwidget)  
@@ -37,16 +37,6 @@
 * [QT布局相关](#qt布局相关)
 
 * [QT容器相关](#qt容器相关)
-
-* [QT多线程&emsp;&emsp;QThread](#qthread) 
-
-* [QT多线程的锁&emsp;&emsp;QMutex](#qmutex)
-
-* [QT多线程的临时锁&emsp;&emsp;QMutexLocker](#qmutexlocker)
-
-* [QT多线程的读写锁&emsp;&emsp;QReadWriteLock](#qreadwritelock)
-
-* [QT多线程的信号量&emsp;&emsp;QSemaphore](#qsemaphore)
 
 * [QT多进程&emsp;&emsp;QProcess](#qprocess)
 
@@ -64,10 +54,6 @@
 [返回开头](#qt常用类以及方法)
 
 类提升就是将原本QtCreator中控件，升级成自己在项目中自定义的 继承该控件并增加新功能后的类。
-  
-
-
-
 
 ## QT中字符转换注意
 [返回开头](#qt常用类以及方法)
@@ -90,7 +76,7 @@ linux下为UTF-8，windows下为GBK等，如果windows下使UTF-8编码使用该
 [返回开头](#qt常用类以及方法)  
 ### 构造函数(QByteArray转QString)  
 QString::QString(const QByteArray &ba)    
-  
+
 将QByteArray对象转换成QString对象
 
 ### length
@@ -101,7 +87,7 @@ int QString::length() const
 
 ### mid    
 QString QString::mid(int position, int n = -1) const  
-  
+
 截取从某一下标到某一下标的字符串,默认-1是表示直到结尾
 
 
@@ -116,12 +102,12 @@ int QString::indexOf(
 
 ### toUtf8
 QByteArray QString::toUtf8() const  
-  
+
 将QString中的内容转换成用Utf-8编码的QByteArray对象  
-  
+
 ### fromUtf8
 [static] QString QString::fromUtf8(const char *str, int size = -1)  
-  
+
 将用UTF-8编码的str转换成使用Unicode编码的QString对象  
 (str可以传入QByteArray对象,QByteArray有对应的转换函数)
 
@@ -406,25 +392,25 @@ void QAbstractScrollArea::setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy)
 该函数用来设置是否隐藏横向滚动条,注意是隐藏而不是移除(QTableView默认情况下不隐藏)  
 Qt::ScrollBarPolicy == Qt::ScrollBarAlwaysOn&emsp;&emsp;开启滚动条  
 Qt::ScrollBarPolicy == Qt::ScrollBarAlwaysOff&emsp;&emsp;关闭滚动条 
-  
+
 ### horizontalHeader  
 QHeaderView *QTableView::horizontalHeader() const  
 
 返回QTableViewz中的表头对象(即最上面的那一行)
-  
+
 
 ### QHeaderView::setSectionResizeMode  
 void QHeaderView::setSectionResizeMode(ResizeMode mode)  
 
 设置表头约束布局    
-  
+
 mode == QHeaderView::Interactive == 0  
 用户可以调整QHeaderView区域的大小。即表格一开始的默认情况,表格内容过少时放大整个表格会在窗体左上角靠紧,QHeaderView也可以用resizeSection函这样的编程的形式改变该大小
 
 mode == QHeaderView::Stretch == 1   
 QHeaderView将自动调整区域大小以填充可用空间。大小可以由用户更改。  
 (该方式最常用,会默认将列表铺平Table所在区域)    
-   
+
 mode == QHeaderView::Fixed == 2   
 用户无法调整QHeaderView区域的大小。除此之外同QHeaderView::Interactive  
 
@@ -438,7 +424,7 @@ void QTableView::setSortingEnabled(bool enable)
 true表示启用,false表示关闭  
 奇数次点击默认是字典序降序排序  
 偶数次点击默认是字典序升序排序    
-  
+
 ### sortByColumn  
 void QTableView::sortByColumn(int column, Qt::SortOrder order)  
 
@@ -460,25 +446,25 @@ order == Qt::DescendingOrder == 1  字典序升序
 void QAbstractItemView::setEditTriggers(EditTriggers triggers)
 
 该函数用来设置是否允许编辑表中和内容
-  
+
 triggers == QAbstractItemView::NoEditTriggers == 0  
 不允许用户编辑表中内容。 
-  
+
 triggers == QAbstractItemView::CurrentChanged == 1  
 当前项发生改变时，就开始编辑。
-  
+
 triggers == QAbstractItemView::DoubleClicked == 2  
 双击某项时开始编辑。
-  
+
 triggers == QAbstractItemView::SelectedClicked == 4  (默认)  
 单击某项时开始编辑。
-  
+
 triggers == QAbstractItemView::EditKeyPressed == 8  
 当在项目上按下平台编辑键时，编辑开始。  
-  
+
 triggers == QAbstractItemView::AnyKeyPressed == 16  
 当在项目上按下任何键时，编辑开始。  
-  
+
 triggers == QAbstractItemView::AllEditTriggers == 31  
 触发上面任何操作时,开始编辑  
 
@@ -488,16 +474,16 @@ void QAbstractItemView::setSelectionBehavior(
 )  
 
 该函数用来选择当每次选择是是选择一个格子还是一行还是一列  
-  
+
 behavior == QAbstractItemView::SelectItems == 0  (默认)
 每次只选择某个格子
-  
+
 behavior == QAbstractItemView::SelectRows == 1  
 每次选择也会全部选中该格子所在行
-  
+
 behavior == QAbstractItemView::SelectColumns == 2
 每次选择也会全部选中该格子所在列  
-  
+
 ### setShowGrid
 void QTableView::setShowGrid(bool show)  
 
@@ -521,7 +507,7 @@ void QStandardItemModel::setHorizontalHeaderLabels(const QStringList &labels)
 
 ### setItem
 void QStandardItemModel::setItem(int row, int column, QStandardItem *item)    
-  
+
 该函数通过QStandardItem对象来给对应行列的位置设置显示的数据  
 该函数传入QStandardItem对象后,QStandardItemModel对象保证了其销毁时会销毁他存储的对象  
 row为对应行数,columns为对应列数
@@ -569,7 +555,7 @@ QVariant类用来充当最常见Qt数据类型的联合。
     model->setHeaderData(0,Qt::Horizontal, "姓名");
     model->setHeaderData(1,Qt::Horizontal, "年龄");
     model->setHeaderData(2,Qt::Horizontal, "性别");
-
+    
     /*设置行字段名*/
     model->setRowCount(3);
     model->setHeaderData(0,Qt::Vertical, "记录一");
@@ -626,20 +612,20 @@ const QModelIndex &parent = QModelIndex()
 删除后返回true,否则返回false。
 
 
- 
-  
+
+
 ## 窗口的鼠标事件函数  
 	void mouseMoveEvent(QMouseEvent *event);					//不可修改名字的的槽函数接口,鼠标移动事件(点击后拖动才算移动)
 	void mouseReleaseEvent(QMouseEvent *event);				//不可修改名字的槽函数接口,鼠标松开事件
 	void mousePressEvent(QMouseEvent *event);					//不可修改名字的槽函数接口,鼠标点击事件
 	void mouseDoubleClickEvent(QMouseEvent* event);			//不可修改名字的槽函数接口,鼠标双击事件
-	
+
 ### 鼠标移动到该器件上时变成其他形状
 void setCursor(const QCursor &);  
 
     ui.Abutton->setCursor(QCursor(Qt::PointingHandCursor));   
     //到按钮上变为手形状
-  
+
 QCyrsor为鼠标形状对象。  
 
 QCursor(Qt::PointingHandCursor)为手形。 
@@ -689,19 +675,19 @@ setAttribute(Qt::WA_TranslucentBackground)
 QFile::QFile(const QString &name)
 
 该构造函数使用一个文件名来构造一个QT中的file对象  
-  
+
 ###  QFileDevice::close
 [override virtual] void QFileDevice::close()
 
 重新实现从QIODevice: close()，用来关闭打开的文件。  
-  
+
 ### open  
 [override virtual] bool QFile::open(QIODevice::OpenMode mode)  
-  
+
 重新实现了QIODevice::open()。  
 使用OpenMode模式打开文件，如果成功返回true;否则错误。  
 在仅写或读写模式下，如果相关文件不存在，此函数将尝试在打开它之前创建一个新文件。    
-  
+
 该函数返回值由mode来相关确定  
 true为打开成功，false为打开失败  
 
@@ -709,32 +695,32 @@ OpenMode的值:
 
 QIODevice::NotOpen == 0x0000  
 文件未打开,可能该模式只是用来查看而不是拿来打开的  
-  
+
 QIODevice::ReadOnly == 0x0001  
 只读打开  
-  
+
 QIODevice::WriteOnly == 0x0002  
 只写打开，对于文件系统子类（例如QFile），此模式意味着QIODevice::Truncate，除非与ReadOnly，Append或NewOnly结合使用。
-  
+
 QIODevice::ReadWrite == QIODevice::ReadOnly | QIODevice::WriteOnly  
 读写打开  
-  
+
 QIODevice::Append == 0x0004  
 以追加模式打开，这样所有的数据都被写到文件的末尾。  
-  
+
 QIODevice::Truncate == 0x0008  
 以重写的模式打开，之前的内容都将丢失。  
-  
+
 QIODevice::Text == 0x0010  
 读取时，行结束符被翻译成'\n'。写入时，行尾结束符被转换为本地编码。  
 例如Win32的'\r\n'。  
-  
+
 QIODevice::Unbuffered == 0x0020  
 跳过缓冲区存放数据  
-  
+
 QIODevice::NewOnly == 0x0040  
 如果要打开的文件已存在，则返回false。仅当文件不存在时才创建并打开该文件。操作系统保证您是唯一创建和打开文件的人。请注意，此模式打开文件后为WriteOnly，并允许将其与ReadWrite组合。此标志目前仅影响QFile。其他类可能在将来使用此标志，但在此之前将此标志与QFile以外的任何类一起使用可能会导致未定义的行为。（自Qt 5.11起）  
-  
+
 QIODevice::ExistingOnly == 0x0080  (暂时不用，一般也不会像他说的那样加)  
 如果要打开的文件不存在则返回false。必须在ReadOnly，WriteOnly或ReadWrite旁边指定此标志。请注意，单独使用此标志与ReadOnly是多余的，因为当文件不存在时，ReadOnly已经失败。此标志目前仅影响QFile。其他类可能在将来使用此标志，但在此之前将此标志与QFile以外的任何类一起使用可能会导致未定义的行为。（自Qt 5.11起）
 
@@ -760,18 +746,18 @@ QByteArray QIODevice::readAll()
 
 ### readLine  
 QByteArray QIODevice::readLine(qint64 maxSize = 0)  
-  
+
 读取一行，但不超过maxSize字符，并以字节数组的形式返回结果。  
-  
+
 不会返回错误,返回空的QByteArray时表示没有数据可读。
 
 ### write
 qint64 QIODevice::write(const QByteArray &byteArray)  
-  
+
 将byteArray的内容写入设备。返回实际写入的字节数，如果发生错误则返回-1。
-  
+
 qint64 QIODevice::write(const char *data)  
-  
+
 将以0结束的8位字符串的数据写入设备。返回实际写入的字节数，如果发生错误则返回-1。
 
 ### seek()  
@@ -846,11 +832,11 @@ QStackedWidget相当于只是一个用来存放QWidget的控件，其并不含�
 int QStackedWidget::addWidget(QWidget *widget)  
 
 该函数添加一个widget到QStackedWidget中，并且返回插入后在界面栈中的索引。  
-  
+
 ### setCurrentIndex  
 void QStackedWidget::setCurrentIndex(int index)  
 该函数设置对应索引在QStackedWidget中的界面。  
-  
+
 ### removeWidget
 void QStackedWidget::removeWidget(QWidget *widget)  
 该函数将对应widget从QStackedWidget中移出，但是并没有销毁widget对象。 
@@ -909,7 +895,7 @@ QT的布局类类型是QLayout，由他衍生出了以下几个布局类型
     QHBoxLayout *qlayout = QHBoxLayout(myMainWindow);
     qlayout->addWidget(mylabel);
     qlayout->addWidget(myButton);
-    
+
 
 如果想要Layout只适用主窗口中某几个控件而并非只是给主窗口添加控件的话，你必须制定一个空的QWidget对象作为其子控件
     
@@ -962,7 +948,7 @@ QVBoxLayout::QVBoxLayout(QWidget *parent)
 QGridLayout::QGridLayout(QWidget *parent)
 
 QGridLayout::QGridLayout()  
-  
+
 #### 表格布局构造  
 QFormLayout::QFormLayout(QWidget *parent = nullptr)
 
@@ -1005,8 +991,8 @@ inline void QGridLayout::addWidget(QWidget *w) {
 QLayout::addWidget(w);  
 }
 调用QLayout的addWidget,默认是垂直布局从上到下。
-  
-  
+
+
 void QGridLayout::addWidget(QWidget *,  
 int row,  
 int column,  
@@ -1019,7 +1005,7 @@ column 空间在栅格中的列数(设置大于1时列号从1开始，设置0时
 上面两个值的开始标号和另外一个不相干。可能一个从0开始，一个从1开始。
 QtCreator中添加的两个标号默认都是从0开始。  
 建议为了统一，都从0开始。
-  
+
 默认时，是从上往下的垂直布局，如果设置了列数，则下次默认添加控件时，除了固定设置的那个，其余的都从设置过列的最后位置，且都按设置过的最大列数的标准来从左到右，从上到下来设置。
     
     例：
@@ -1066,7 +1052,7 @@ Alignment的意义同上。
 void QLayout::setContentsMargins(int left, int top, int right, int bottom)  
 设置布局周围使用的左、上、右和下边距。
 默认情况下，QLayout使用样式提供的值。在大多数平台上，所有方向的边缘都是11像素。  
-  
+
 ### 设置布局比例
 #### QGridLayout和QFormLayout的setStretch函数
 void QBoxLayout::setStretch(int index, int stretch)  
@@ -1075,7 +1061,7 @@ void QBoxLayout::setStretch(int index, int stretch)
 
 #### QGridLayout和QFormLayout的setRowStretch和setRowStretch
 void QGridLayout::setRowStretch(int row, int stretch)  
-  
+
 设置某行比例(某行或某列在不设置时比例为0)  
 从0行开始计数
 
@@ -1089,7 +1075,7 @@ void QGridLayout::setRowStretch(int row, int stretch)
 ### 设置布局中，每个控件间的距离  
 #### QGridLayout和QFormLayout的setSpacing
 void QBoxLayout::setSpacing(int spacing)
-  
+
 设置布局中每个控件之间的距离，单位px；
 
 
@@ -1373,261 +1359,6 @@ QMap的子类，提供了多值的接口，一个键对应多个值。 ，允许
 ### QMultiHash<Key, T>	
 QHash的子类，提供了多值的接口，允许存放相同而值。
 
-
-
-
-## QThread
-[返回开头](#qt常用类以及方法)  
-Qt多线程使用两种方法来创建线程：   
-
-* 继承QThread的方法并且重写run函数，之后通过start来启动线程。
-
-* 将一个类的事件处理全部交给一个线程去处理，而不是向上面那样简单的直接使用线程。
-
-### 槽函数触发后的归属问题
-
-#### connect函数的第五参数是默认值的情况下
-
-* 对于继承QThread的方法并且重写run函数的方法  
-
-哪个线程触发的槽函数，该槽函数就是哪个线程运行。  
-
-* 对于使用了转移事件处理的方法
-
-转移了事件处理循环给线程的对象，他的槽函数一定都在对应转移后的线程中进行。
-
-
-### 返回线程句柄
-[static] Qt::HANDLE QThread::currentThreadId()
-
-返回当前执行线程的线程句柄(可以用来当作tid直接输出)。
-
-Qt::HANDLE在所有平台上被定义为void*
-
-### 线程结束时信号
-[signal] void QThread::finished()
-
-经常和  
-[slot] void QObject::deleteLater()  
-配合一起删除线程
-
-### 线程休眠  
-[static] void QThread::sleep(unsigned long secs) 秒级休眠  
-[static] void QThread::msleep(unsigned long msecs) 毫秒级休眠    
-[static] void QThread::usleep(unsigned long usecs) 微秒级休眠
-  
-这三个函数都是通过Thread::调用时会使调用线程休眠。
-
-
-### quit
-[slot] void QThread::quit()  
-
-不应该理解为quit会使当前线程从事件循环中退出，并继续运行事件循环。 
-
-该函数应该是你使用现成的主类调用exec()完后再停止线程的。  
-这表示你必须从exec()返回后再调用quit停止线程。
-
-就是差不多是从当前窗口实例的事件循环中退出后，自动帮你退出线程。
-
-### exit
-void QThread::exit(int returnCode = 0)
-
-同quit，quit相当于是exit(0)的槽函数版本。
-
-* l注意使用转移事件处理创建线程的方法需要quit和exit来终止，不然exec()结束后，线程仍会等待事件过来。但是该方法中的线程可以使用exit与quit来终止线程中的事件循环和退出线程，但是不会中断最后一次运行的任务，那个任务必须运行完后再推出
-
-
-### terminate
-[slot] void QThread::terminate()
-
-该函数可以立即或是等待一些系统调度时间后终止现在运行的线程(不管他是否在事件循环中)。  
-
-该函数不安全，不稳定，建议调用过后使用wait函数。
-
-不允许该函数在正常程序中使用，只有在某个线程不会影响其他线程且它无法正常终止但是的确是需要终止时调用。
-
-
-### wait
-bool QThread::wait(unsigned long time = ULONG_MAX)  
-
-阻塞线程，直到满足以下任一条件:
-
-* 与这个QThread对象相关联的线程已经完成执行(即当它从run()返回时)。如果线程已经完成，这个函数将返回true。如果线程还没有启动，它也会返回true。
-
-* 时间已经过了毫秒。如果time是ULONG_MAX(默认值)，则等待永远不会超时(线程必须从run()返回)。
-
-* 如果等待超时，这个函数将返回false。
-* 
-
-### moveToThread
-void QObject::moveToThread(QThread *targetThread)
-
-该函数设置后，将会把一个类的所有的事件处理转移给另外一个线程处理。  
-比如你在别的类中触发了该类的槽函数，则一定是在转移的那个线程中进行。
-
-如果对象有父对象，则无法移动该对象。有父对象的类的事件处理必须在父对象的事件处理循环线程中进行。
-
-### start
-[slot] void QThread::start(Priority priority = InheritPriority)
-
-enum QThread::Priority指定系统如何调度新进程。
-
-默认是使用与创建线程相同的优先度。
-
-对于重载了run的方法，start将会启动线程。
-
-对于转移了事件处理循环的方法，start将会开启这个事件循环调度。  
-如果仅仅创建且转移了事件处理循环但是没有调用start，则相当于没有创建线程。
-
-### finished
-[signal] void QThread::finished()
-
-QT线程结束后会发送的信号。
-
-对于转移了事件处理循环的方法，一次任务结束并不会发送该信号，只有对应线程调用了quit或exit等正常结束后才会发送该信号。
-
-
-## QMutex
-[返回开头](#qt常用类以及方法)
-
-### 构造函数
-QMutex::QMutex(RecursionMode mode = NonRecursive)
-
-RecursionMode的值：
-
-QReadWriteLock::Recursive == 1 允许多次上锁，并且多次unlock解锁
-
-QReadWriteLock::NonRecursive == 0 不允许多次上锁
-
-
-### lock
-void QMutex::lock()  
-
-上锁  
-
-### unlock
-void QMutex::unlock()
-
-解锁
-
-### tryLock
-bool QMutex::tryLock(int timeout = 0)  
-
-timeout => 0 一段时间内尝试上锁  
-timeout < 0 永远等待直到可以上锁
-
-### isRecursive
-bool QMutex::isRecursive()
-
-查看是否允许上锁
-
-
-## QMutexLocker
-
-该锁一般被用作临时锁，构造时传入锁对象，析构时自动释放锁，在许多场合很好用。
-
-### 构造函数  
-QMutexLocker::QMutexLocker(QMutex *mutex)
-
-传入锁并上锁，并在该对象销毁时解锁。  
-
-
-### 返回构造该对象时传入的锁对象
-QMutex *QMutexLocker::mutex() const
-
-
-### relock
-void QMutexLocker::relock()
-
-用锁构造了QMutexLocker对象后仍可以操作传入的锁。
-
-该函数把传入的锁重新上锁
-
-### unlock
-void QMutexLocker::unlock()
-
-该函数把传入的锁解锁，析构时会自动判断锁是否上锁了。
-
-## QReadWriteLock
-
-对于读写锁
-
-* 如果有写上锁，则直到写完成，所有的读都会等待，写也会。
-
-* 如果有读上锁，则读上锁操作可以继续，写上锁会排入等待序列。
-
-* 写上锁操作在等待序列中的优先级是大于读上锁操作的，在序列中永远优先处理写操作。  
-
-
-### 构造函数  
-QReadWriteLock::QReadWriteLock(RecursionMode recursionMode = NonRecursive)
-
-RecursionMode的值：
-
-QReadWriteLock::Recursive == 1 允许多次上锁，并且多次unlock解锁
-
-QReadWriteLock::NonRecursive == 0 不允许多次上锁
-
-* 注意读锁之间的允许通过原理并不是重复上锁
-
-### 读上锁
-void QReadWriteLock::lockForRead()  
-
-### 写上锁
-void QReadWriteLock::lockForWrite()
-
-### 尝试读上锁
-bool QReadWriteLock::tryLockForRead(int timeout)
-
-bool QReadWriteLock::tryLockForWrite()
-
-会被写锁阻塞
-
-### 尝试写上锁
-bool QReadWriteLock::tryLockForWrite()
-
-bool QReadWriteLock::tryLockForWrite(int timeout)
-
-会被读和写锁阻塞
-
-### 解锁  
-void QReadWriteLock::unlock()
-
-
-## QSemaphore
-
-信号量就相当于是一个可以多次上锁的锁。
-
-### 构造函数  
-QSemaphore::QSemaphore(int n = 0)  
-
-创建一个新的信号量，并初始化它保护的资源数量为n(默认为0)。
-
-### acquire
-void QSemaphore::acquire(int n = 1)  
-
-试图获取由信号量保护的n个资源。如果n > available()，这个调用将阻塞，直到有足够的资源可用。
-
-### available
-int QSemaphore::available() const
-
-返回信号量当前可用的资源数量。
-
-### release
-void QSemaphore::release(int n = 1)
-
-释放由信号量保护的n个资源。
-
-如果n>available()，则更新剩余信号量为n。
-
-### tryAcquire
-bool QSemaphore::tryAcquire(int n = 1)
-
-bool QSemaphore::tryAcquire(int n, int timeout)
-
-试图获得n个信号量。
-
-
 ## QProcess
 [返回开头](#qt常用类以及方法)
 ### started
@@ -1716,7 +1447,7 @@ void QProcess::start(const QString &program, const QStringList &arguments, OpenM
 * program 进程的路径以及程序名
 
 * arguments 命令行藏书  
- 
+
 * mode打开模式(详情见QIODevice)
 
 注意,start只是用program启动进程的时候不可以使用快捷方式，和文件连接.
@@ -1732,7 +1463,7 @@ void QProcess::start(const QString &program, const QStringList &arguments, OpenM
     
     使用中文  
     m_Process.start("D:/"+QString::fromLocal8Bit("中文目录")+"/notepad++.exe");
-    
+
 
 start启动后的进程与QProcess对象几乎绑定，QProcess对象销毁时，进程随之结束。
     
@@ -2276,7 +2007,7 @@ const QModelIndex& parent = QModelIndex()
 * 这几个函数不仅保证了你的model正常功能，还保证了你的model加载到QT自带的View中可以随便使用，以及你的model放入QT的自带数据项也可以正常运作。但是这也只能保证你的数据可以显示在视图上而不能通过视图修改他们。
 
 ## 可选函数：
-    
+
 ### flags
 Qt::ItemFlags QAbstractItemModel::flags(const QModelIndex &index) const
 
@@ -2608,14 +2339,15 @@ Type QEvent::type() const
         }
         QString param;
     };
-    
-        
-    void Widget::on_pushButton_clicked()    //按钮按下发送事件
-    {
-        MyEvent e(MyType, "自定义事件");
-        QApplication::sendEvent(this, &e);
-    }
-    
+
+
+​        
+​    void Widget::on_pushButton_clicked()    //按钮按下发送事件
+​    {
+​        MyEvent e(MyType, "自定义事件");
+​        QApplication::sendEvent(this, &e);
+​    }
+​    
     bool Widget::event(QEvent *event)
     {
         if(event->type() == MyType)
@@ -2626,7 +2358,7 @@ Type QEvent::type() const
         }
         return QWidget::event(event);
     }
-    
+
 ### spontaneous
 bool QEvent::spontaneous() const
 
