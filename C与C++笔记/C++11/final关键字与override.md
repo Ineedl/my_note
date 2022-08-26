@@ -1,5 +1,5 @@
 ## final
-final用于标记在一个基类后面，表示该类无法被集成
+final用于标记在一个基类后面，表示该类无法被继承
 
 ```c++
 struct Base final {
