@@ -33,7 +33,7 @@
     
     weapon=('ak47','m4a1','an94',[123,'456',"789"],776)
     weapon2=()      #元祖只是限定了元祖里面的东西，没有限制指向他的变量不能修改
-    
+
 * 元祖也可以和列表，元祖，字典相互嵌套。
 
 ### 字典
@@ -45,7 +45,7 @@
 
     weapon={'Tom':'ak47','jerry':'m4a1','Anne':['an94','Hk416']}
     print(weapon['Tom'])
-    
+
 * 同列表，字典在初始创建并且赋值给一个变量后，变量之间的赋值都只是相当于引用赋值，如果要将一个变量指向字典赋给另外一个变量，
 
 例：
@@ -158,90 +158,4 @@ python的函数允许拥有默认参数，但是默认参数必须都放在函�
     return fs
     f1, f2, f3 = count()
     #返回9 9 9，以最后一次count调用后i的值为准
-    
-## python lambda表达式
-python中可以将函数当作一个对象，lambda就是一个临时的函数对象
-例：
-    
-    lambda [list] : 表达式
-    #等同于
-    
-    def name(list):
-        return 表达式
-    name(list)
-    
-    #或
-    def name(list):
-        表达式
-        #无return
-    name(list)
 
-## python函数赋值
-python中可以随意的将一个函数赋予一个变量，并且使用该变量调用该函数
-
-
-## python装饰器
-python的装饰器用来装饰即用一个函数装饰另外一个函数，使得该函数在调用前后做一些特殊处理
-
-* python使用@+函数名来声明@后的那个函数修饰了@下面声明的那个函数
-
-### 无参装饰器
-
-例：
-    
-    def log(f):
-        def fn(x):
-            print('call ' + f.__name__ + '()...')
-            return f(x)
-    return fn
-    
-    @log
-    def factorial(n):
-        return reduce(lambda x,y: x*y, range(1, n+1))
-    
-    print(factorial(10))
-    
-    #上述factorial(10)等同于
-    factorial=log(factorial(10))
-    
-### 带参装饰器
-
-例：
-    
-    def log(prefix):
-    def log_decorator(f):
-        def wrapper(*args, **kw):
-            print(args)
-            print(kw)
-            print('[{}] {}()...'.format(prefix, f.__name__))
-            return f(*args, **kw)
-        return wrapper
-    return log_decorator
-    
-    @log('DEBUG')
-    def my_func(a,b,c,e):
-        pass
-    
-    my_func("a","b","c",e=9)
-    
-    #其中装饰器函数(log)的参数为装饰器接受的参数(此处接受了'DBUG')
-    #wrapper函数的两个参数分别接受了装饰函数所接收的参数(此处为a,b,c,d)
-    #这算是一个基本格式，嵌套了两层，第二层才真正处理装饰函数的参数，第一次处理传入装饰器的参数
-
-
-## 偏函数
-创建一个调用另外一个部分参数或变量已经预置的函数
-
-例：
-
-    bin2dec = partial( int, base=2 )
-    print bin2dec( '0b10001' )  # 17
-    print bin2dec( '10001' )  # 17
-    
-    hex2dec = partial( int, base=16 )
-    print hex2dec( '0x67' )  # 103
-    print hex2dec( '67' )  # 103
-    
-    #bin2dec和hex2dec就是partial的偏函数
-    
-* 原理：部分函数是类重载了()运算符的仿函数，这使得这些仿函数可以不管部分参数使其赋值给其他变量来达到偏函数的样子，上述partial中使用了位置形参
