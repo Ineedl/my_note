@@ -1,3 +1,46 @@
+## ffmpeg中的时间单位
+
+> AVRational
+
+定义
+
+```c++
+typedef struct AVRational{
+    int num; ///< Numerator
+    int den; ///< Denominator
+} AVRational;
+```
+
+代表时间基的结构单位，代表num/den秒
+
+
+
+> AV_TIME_BASE
+
+定义
+
+```c++
+#define AV_TIME_BASE            1000000
+```
+
+AV_TIME_BASE的意义为1000000us，相当于1秒
+
+
+
+> AV_TIME_BASE_Q
+
+定义
+
+```c++
+#define AV_TIME_BASE_Q          (AVRational){1, AV_TIME_BASE}
+```
+
+AV_TIME_BASE_Q代表秒数，1 AV_TIME_BASE_Q = 1/1000000 秒
+
+
+
+
+
 ## 时间基
 
 时间基表示秒/单位刻度，即一个刻度是多少秒。
