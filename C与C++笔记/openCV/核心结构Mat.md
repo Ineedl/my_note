@@ -2,6 +2,8 @@
 
 Mat结构为cv中的一个class(虽然我觉得他更适合作为struct)，它是作为图像矩阵载体的数据结构。
 
+* 该类型结构仅适用于Mat中，相当于一个枚举值
+
 ## opcnCV中定义的矩阵中数值的类型
 
 ![](./图片/Mat矩阵类型值对应图.jpeg)
@@ -34,4 +36,17 @@ F表float
 
 * type()返回值对应的类型见上面矩阵中数值的数据类型
 
-## 读取Mat中的像素数据
+## Mat常用构造函数
+
+> Mat::Mat()
+
+空构造
+
+---
+
+> Mat::Mat(int rows, int cols, int type)
+
+创建行数为 rows，列数为 col，类型为 type 的图像。
+
+* type为上述CV_8UC1或CV_8U(1)这种
+* 该函数不对Mat中的值进行初始化
