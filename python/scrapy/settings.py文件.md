@@ -13,7 +13,25 @@ BOT_NAME = 'my_scrapy'
 * CONCURRENT_REQUESTS
 
 ```python
-CONCURRENT_REQUESTS = 32			#scrapy启动的下载与请求线程
+CONCURRENT_REQUESTS = 32			#scrapy下载器线程数，默认16
+```
+
+* CONCURRENT_ITEMS
+
+```python
+CONCURRENT_ITEMS = 100				#所有并发的最大数量默认100
+```
+
+* CONCURRENT_REQUESTS_PER_DOMAIN
+
+```
+CONCURRENT_REQUESTS_PER_DOMAIN = 8			#对单个网站进行并发请求的最大值，默认8
+```
+
+* CONCURRENT_REQUESTS_PER_IP
+
+```python
+CONCURRENT_REQUESTS_PER_IP = 0	#对单个ip进行并发请求的最大线程数，默认0
 ```
 
 * SPIDER_MODULES
