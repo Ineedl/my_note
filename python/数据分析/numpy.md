@@ -47,6 +47,19 @@ np.ones(2,1) #构造2行1列的全1数组
 
 #构造对角线数组
 numpy.eye(10)	#构建一个10行10例的数组，除了索引为 [n,n] (0<=n<=9) 为1外，其余的都为0
+
+#数组数据的引用，a引用b
+b = numpy.array([[1,2],[3,4],[5,6]])
+a = b
+
+#创建视图，a但是a的数据由b保管，值拷贝了，但是a和b的值会一起变
+b = numpy.array([[1,2],[3,4],[5,6]])
+a = b[:]
+
+#值拷贝，a、b不互相影响
+b = numpy.array([[1,2],[3,4],[5,6]])
+a = b.copy()
+
 ```
 
 > 常用成员
@@ -142,5 +155,22 @@ numpy.hstack((t1,t2))
 #获取最小最大值位置
 numpy.argmax(t,axis=0) #如果t为二维，则axis=0表示获取每一列中最小值位置，axis=1表示获取每一行中
 numpy.argmin(t,axis=1) 
+
+
+#生成随机数
+#均匀分布(概率相同)
+#正态分布，中间高两头低，左右对称
+
+numpy.rand(n0,n1,n2,...,nn) #创建n0-nn维度的均匀分布的随机数数组，浮点数，范围从0-1
+
+numpy.randn(n0,n1,n2,...,nn) #创建n0-nn维度的标准正态分布随机数数组，浮点数，平均数为0，标准差1
+
+numpy.randint(low,high,(shape)) #创建范围是low - high的随机数数组，形状(维度)为shape
+
+numpy.uniform(low,high,(size)) #创建具有均匀分布的数组，范围low-high，形状(维度)为size 
+
+numpy.normal(loc,scale,(size)) #从指定正态分布中随机抽取样本，分布中心是loc，标准差是scale，形状(维度)是size
+
+numpy.seed(s) #设置产生上述随机数的种子
 ```
 
