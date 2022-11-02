@@ -76,12 +76,14 @@ LOG_FILE = 'tmp.log'
 COOKIES_ENABLED = True
 #为False时
 #scrapy 关闭自带的 CookiesMiddleware 中间件，response 设置的 cookie 失效
-#使用 cookies 设置的 cookie 失效。
+#使用 cookies 设置的 cookie/Cookie 失效。
+#使用default_header设置的cookie失效
 #使用 headers 设置的 cookie 保留。
 
 #为True时
 #scrapy 启动自带的 CookiesMiddleware 中间件，为请求自动添加服务器响应的 cookie，
 #如果我们在 Request 中，使用 cookies 参数添加 cookie 时， 我们添加的 cookie 会额外加入到请求头中，如果响应有重名设置，则覆盖。（即，cookies 参数的cookie优先，但是 response 里的 cookie 也一个不少）
+#使用default_header设置的cookie/Cookie生效
 #如果我们使用 headers 参数添加 cookie，headers添加的 cookie 会失效，被响应 cookie 完全覆盖。（即，headers里设置的 cookie 无效）
 ```
 
@@ -93,7 +95,7 @@ DEFAULT_REQUEST_HEADERS = {
     'Connection': 'keep-alive',
     'Cookie':'acw_tc=74d3b7a716545902959307938ec0ee0b33a343e59b35b9a5ac91ba924c'
 }
-#如果想在该设置中使用Cookie，则请设置 COOKIES_ENABLED = True
+#如果想在该设置中使用Cookie，则请设置 COOKIES_ENABLED = False
 ```
 
 * SPIDER_MIDDLEWARES：请求中间件
