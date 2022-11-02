@@ -76,7 +76,8 @@ LOG_FILE = 'tmp.log'
 DEFAULT_REQUEST_HEADERS = {
     'Host': 'www.haodf.com',
     'Connection': 'keep-alive',
-    'Cookie':'acw_tc=74d3b7a716545902959307938ec0ee0b33a343e59b35b9a5ac91ba924c'
+    #'Cookie':'acw_tc=74d3b7a716545902959307938ec0ee0b33a343e59b35b9a5ac91ba924c'
+  	#注意Cookie和cookie字段在该设置项里设置后无效，需要cookie时，请在spider的开始函数中手动传入cookie。
 }
 ```
 
