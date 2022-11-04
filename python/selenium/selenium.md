@@ -15,8 +15,12 @@ selenium本来是一个web自动化测试工具，可以像web浏览器一样一
 #比如google浏览器的
 import selenium.webdriver.chrome.webdriver
 
-wd = webdriver.Chrome()   #该引用后续发送http请求相关页面时，将会打开一个浏览器，模拟进行浏览器请求。
-													#注意一个引擎引用一般只能在一个页面上操作，目前不考虑多页面
+
+wd = webdriver.Chrome()  		#该引用后续发送http请求相关页面时，将会打开一个浏览器，模拟进行浏览器请求。
+								#注意一个引擎引用一般只能在一个页面上操作，目前不考虑多页面
+
+#当然也可以手动指定驱动位置
+wd = webdriver.Chrome("F:/google驱动/chromedriver.exe")   
 ```
 
 3. 打开想要获取的完整页面的url，打开后会同浏览器访问了该网址一样，如果访问后有相关跳转，模拟的浏览器也会跳转。
