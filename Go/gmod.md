@@ -45,6 +45,39 @@ go.mod文件中提供了module, require、replace和exclude 四个命令来进�
 - `replace` 语句可以替换依赖项模块
 - `exclude` 语句可以忽略依赖项模块
 
+```go
+//go mod文件实例
+module hello
+
+//代码所需要的Go的最低版本
+go 1.16
+require (
+  //依赖的库 + 版本号
+	github.com/cenk/backoff v2.2.1+incompatible
+	github.com/coreos/bbolt v1.3.3
+	github.com/edwingeng/doublejump v0.0.0-20200330080233-e4ea8bd1cbed
+	github.com/stretchr/objx v0.3.0 // indirect
+	github.com/stretchr/testify v1.7.0
+	go.etcd.io/bbolt v1.3.6 // indirect
+	go.etcd.io/etcd/client/v2 v2.305.0-rc.1
+	go.etcd.io/etcd/client/v3 v3.5.0-rc.1
+	golang.org/x/net v0.0.0-20210610132358-84b48f89b13b // indirect
+	golang.org/x/sys v0.0.0-20210611083646-a4fc73990273 // indirect
+  
+  //引用的库的最后面 加上 // indirect 表示该依赖库是其他第三方库的依赖库 (即此处只是间接依赖了该库)
+  //+incompatible 表示引用了不规范的库
+)
+exclude (
+	go.etcd.io/etcd/client/v2 v2.305.0-rc.0
+	go.etcd.io/etcd/client/v3 v3.5.0-rc.0
+)
+retract (
+    v1.0.0 // 废弃的版本，请使用v1.1.0
+)
+```
+
+
+
 > 安装package
 
 go run 运行代码时， go mod 会自动查找依赖自动下载

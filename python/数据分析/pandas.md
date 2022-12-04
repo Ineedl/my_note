@@ -32,7 +32,6 @@ t2 = pd.Series(t,index = list("ade"))	#重新指定索引为d,e,f,g
 #d	NaN
 #e	NaN
 
-
 #通过字典创建，key变索引，value变值
 tmp_dict = {"name":"xiaoming","age":30,"tel":10086}
 t3 = pd.Series(tmp_dict)
