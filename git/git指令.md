@@ -60,10 +60,13 @@ git clone <远程库地址或服务器地址>
 ```
 ## 本地克隆
 ```bash
-git clone <本地仓库路径>
+git --recursive clone <本地仓库路径>
 ```
 
+--recursive：递归克隆该仓库中需要的其他仓库
+
 ## 添加改动的文件到缓存区
+
 ```bash
 git add <filename>
 git add *

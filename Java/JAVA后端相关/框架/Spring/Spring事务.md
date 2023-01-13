@@ -86,10 +86,8 @@ Spring提供了一种处理事务的统一模型，能使用统一步骤完成�
 
 2.开启事务注解驱动，告诉Spring框架将要使用注解的方式来完成事务。
 
-
 `主配置文件中例子`
-    
-    
+
     <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        
        //次行为tx:annotation-driven标签需要的命名空间
@@ -116,15 +114,16 @@ Spring提供了一种处理事务的统一模型，能使用统一步骤完成�
         <property name="username" value="root" />
         <property name="password" value="zxc563221659" />
         <property name="maxActive" value="20" />
-    
-    
+
+
+​    
     <!--使用Spring的事务管理-->
     <!--声明事务管理器-->
     <bean id="MysqlTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <!--需要指定数据源，来让该事务管理器对数据库操作来进行提交与回滚-->
         <property name="dataSource" ref="myDataSource" />
     </bean>
-
+    
     <!--
     开启事务注解驱动
     此处告诉Spring要使用注解的方式来完成事务，要创建事务代理对象
@@ -196,18 +195,18 @@ Spring将会给代理对象中你要添加事务的方法的代理方法加上�
         <property name="username" value="root" />
         <property name="password" value="zxc563221659" />
         <property name="maxActive" value="20" />
-
+    
     </bean>
-
+    
     ...
-
+    
     <!--使用Spring的事务管理-->
     <!--声明事务管理器-->
     <bean id="MysqlTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <!--需要指定数据源-->
         <property name="dataSource" ref="myDataSource" />
     </bean>
-
+    
     <!--
     声明业务方法他的事务属性
     -->
@@ -229,16 +228,16 @@ Spring将会给代理对象中你要添加事务的方法的代理方法加上�
                 rollback-for    指定的回滚异常类型,需要全类名。
             -->
             <tx:method name="buy" propagation="REQUIRED" isolation="DEFAULT" rollback-for="java.lang.NullPointerException,java.lang.RuntimeException" />
-
+    
             <!--该项目中没有该方法,只是举例-->
             <!--使用通配符的tx:method-->
             <tx:method name="select*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="java.lang.NullPointerException,java.lang.RuntimeException" />
-
+    
             <!--tx:method先寻找对应名方法配置,再找部分通配方法配置,最后再找全统配配置,所以他们都存在时并不影响-->
             <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="java.lang.NullPointerException,java.lang.RuntimeException" />
         </tx:attributes>
     </tx:advice>
-
+    
     <!--AOP配置-->
     <aop:config>
         <!--配置切入点表达式,指定哪些包中的类要使用事务-->
@@ -247,7 +246,7 @@ Spring将会给代理对象中你要添加事务的方法的代理方法加上�
             配置所有service包以及其子包中的所有类的不限制参数的方法都进行动态代理的创建
         -->
         <aop:pointcut id="servicePt" expression="execution(* *..service..*.*(..))" />
-
+    
         <!--
         配置增强器,用来关联advice中的设置与切入点表达式,
         让创建的动态代理与配置的相关方法的事务对应
