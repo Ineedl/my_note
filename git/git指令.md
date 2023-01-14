@@ -56,14 +56,24 @@ git remote rm origin
 
 ## 从别的仓库克隆
 ```bash
-git clone <远程库地址或服务器地址>
+git --recursive clone <远程库地址或服务器地址>
 ```
-## 本地克隆
+--recursive：递归克隆该仓库中需要的其他仓库
+
+`依赖模块获取`
+
 ```bash
-git --recursive clone <本地仓库路径>
+git clone <远程库地址或服务器地址>
+cd <项目路径>
+git submodule init 
+git submodule update
 ```
 
---recursive：递归克隆该仓库中需要的其他仓库
+## 本地克隆
+
+```bash
+git  clone <本地仓库路径>
+```
 
 ## 添加改动的文件到缓存区
 
