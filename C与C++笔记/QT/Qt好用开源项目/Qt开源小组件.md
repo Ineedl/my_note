@@ -13,3 +13,5 @@ Qt编写的一些开源的demo，支持Qt4、Qt5、Qt6，支持任意系统，�
 ## qskinny
 
 https://github.com/uwerat/qskinny
+
+![](./image/qskinny.jpg)
