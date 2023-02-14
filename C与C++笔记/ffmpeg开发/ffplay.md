@@ -33,18 +33,20 @@ ffplay videoOrAudio_file_name
 |-an|禁用音频|
 |-vn|禁用视频|
 |-sn|禁用字幕|
-|-seek_interval interval|自定义左/右键定位拖动间隔(以秒为单位)，默认值为10秒|
-|-window_title title|自定义窗口标题|
-|-noborder|无边框窗口|
-|-nodisp|关闭图形化显示窗口，只在控制台显示播放过程信息|
-|-ss t|从第t秒开始播放，t也可以是'55' 55 seconds, '12:03:45' ,12 hours, 03 minutes and 45 seconds, '23.189' 23.189 second等类似的时间单位|
-|-t duration|设置播放视频/音频的时间长度，时间单位的填写如 -ss选项类似|
-|-loop number|设置播放循环次数|
-|-volume vol|设置起始音量百分比为vol|
-|-showmode mode|设置显示模式，可用的模式值：0 显示视频，1 显示音频波形，2 显示音频频谱。缺省为0，如果视频不存在则自动选择2|
-|-vf filtergraph|设置视频滤镜|
-|-af filtergraph|设置音频滤镜|
-|-f <fmt>|强制使用规定的格式解析文件|
+| -f <fmt>                                                    | 强制使用规定的格式解析文件                                   |
+| -ac <n>                                                     | 指定音频通道数                                               |
+| -ar <n>                                                     | 指定音频采样率                                               |
+| -seek_interval interval                                     | 自定义左/右键定位拖动间隔(以秒为单位)，默认值为10秒          |
+| -window_title title                                         | 自定义窗口标题                                               |
+| -noborder                                                   | 无边框窗口                                                   |
+| -nodisp                                                     | 关闭图形化显示窗口，只在控制台显示播放过程信息               |
+| -ss t                                                       | 从第t秒开始播放，t也可以是'55' 55 seconds, '12:03:45' ,12 hours, 03 minutes and 45 seconds, '23.189' 23.189 second等类似的时间单位 |
+| -t duration                                                 | 设置播放视频/音频的时间长度，时间单位的填写如 -ss选项类似    |
+| -loop number                                                | 设置播放循环次数                                             |
+| -volume vol                                                 | 设置起始音量百分比为vol                                      |
+| -showmode mode                                              | 设置显示模式，可用的模式值：0 显示视频，1 显示音频波形，2 显示音频频谱。缺省为0，如果视频不存在则自动选择2 |
+| -vf filtergraph                                             | 设置视频滤镜                                                 |
+| -af filtergraph                                             | 设置音频滤镜                                                 |
 
 ## 常用
 
