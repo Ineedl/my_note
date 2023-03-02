@@ -264,6 +264,8 @@ git reset -–hard HEAD~x										//回退到操作前的x个版本
 git reset -–hard HEAD^										//回退到上个版本
 	
 git reset -–hard HEAD^^										//回退到上上个版本
+
+git reset head~												//撤销上次提交
 ```
 
 另外学习

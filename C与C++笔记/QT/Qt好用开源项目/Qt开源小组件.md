@@ -14,4 +14,12 @@ Qt编写的一些开源的demo，支持Qt4、Qt5、Qt6，支持任意系统，�
 
 https://github.com/uwerat/qskinny
 
+* 只支持Qt版本>Qt5.12
+
 ![](./image/qskinny.jpg)
+
+## QCoolPage
+
+https://github.com/YYC572652645/QCoolPage
+
+![](./image/QCoolPage.jpg)
