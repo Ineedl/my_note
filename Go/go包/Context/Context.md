@@ -283,7 +283,7 @@ func (c *timerCtx) Deadline() (deadline time.Time, ok bool) {
 }
 
 func (c *timerCtx) cancel(removeFromParent bool, err error) {
-    将内部的cancelCtx取消
+    //将内部的cancelCtx取消
     c.cancelCtx.cancel(false, err)
     if removeFromParent {
         // Remove this timerCtx from its parent cancelCtx's children.
@@ -291,7 +291,7 @@ func (c *timerCtx) cancel(removeFromParent bool, err error) {
     }
     c.mu.Lock()
     if c.timer != nil {
-        取消计时器
+        //取消计时器
         c.timer.Stop()
         c.timer = nil
     }
