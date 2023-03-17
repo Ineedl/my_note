@@ -272,7 +272,8 @@ LINK_LIBRARIES("/opt/MATLAB/R2012a/bin/glnxa64/libmx.so")
 
 ```cmake
 add_custom_command(
-TARGET target
+[TARGET target]
+[OUTPUT fileName]
 POST_BUILD|PRE_BUILD|PRE_LINK
 COMMAND command1 [ARGS] [args1...]
 [COMMAND command2 [ARGS] [args2...] ...]
@@ -283,14 +284,24 @@ COMMAND command1 [ARGS] [args1...]
 ```
 
 * `TARGET`：构建的目标
+
 * `POST_BUILD|PRE_BUILD|PRE_LINK`：在该目标构建后、构建前、链接前执行命令
+
 * `COMMAND`：要执行的命令，可以是任何可执行程序、脚本或命令行命令。
 
 * `ARGS`：传递给命令的参数。
+
 * `WORKING_DIRECTORY`：命令工作的目录，不写默认在CMakeLists.txt所在目录下。
+
 * `COMMENT`：提供一个描述性注释。
+
 * `VERBATIM`：添加该符号后将保证：保留命令行参数的字面值，并且不进行转义，比如命令行参数中'\n'、'\t'不会转义。
-* `ADDEND`：添加该符号后将保证：将新的自定义命令附加到已存在的自定义命令后一起执行，如果之前有个`add_custom_command`声明了命令，如果本次的`add_custom_command`不加`ADDEND`，那么本次命令将会替换上次的命令。
+
+* `APPEND`：添加该符号后将新的自定义命令附加到已存在的某个带有`OUTPUT`的`add_custom_command`的`COMMAND`之后，保证顺序。
+
+  `APPEND`必须和`OUTPUT一起存在`
+
+* `OUTPUT`：表示该add_custom_command预期生成文件(该文件不可见，为一种虚拟的东西，用来给`add_executable`来使用生成目标)，`OUTPUT`无法和`TARGET`一起存在。
 
 `实例`
 
@@ -303,5 +314,80 @@ foreach (QT_LIB Core Gui Widgets Network WebSockets Charts)     #自动找Qt依�
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
                 )
 endforeach (QT_LIB)
+```
+
+`OUTPUT参数和APPEND参数的实例`
+
+```cmake
+cmake_minimum_required(VERSION 3.0)
+
+project(MyProject)
+
+# 添加一个自定义命令，用于生成 output.txt 文件
+add_custom_command(OUTPUT output.txt
+                   COMMAND echo "Hello, World!" >> output3.txt
+                   COMMENT "Generating output file"
+                   VERBATIM)
+
+# 添加一个自定义命令，用于在 output.txt 文件末尾追加一行
+add_custom_command(OUTPUT output2.txt
+                   COMMAND echo "This is an appended line." >> output3.txt
+                   COMMENT "Appending to output file"
+                   VERBATIM
+                   )
+
+##This is an appended line2222.和 Hello，World打印的顺序不确定。
+add_custom_command(OUTPUT output4.txt
+                   COMMAND echo "This is an appended line2222." >> output3.txt
+                   COMMENT "Appending to output file"
+                   VERBATIM
+                   )
+
+
+# 将 output.txt 文件添加到构建目标中
+# output.txt和output2.txt和output4.txt并不会实际生成，只是一个虚拟目标
+add_executable(MyTarget main.c output.txt output2.txt output4.txt)
+
+# 将 output.txt和output2.txt 文件添加到构建目标中
+
+add_executable(MyTarget main.c output.txt output2.txt)
+
+```
+
+
+
+```cmake
+cmake_minimum_required(VERSION 3.0)
+
+project(MyProject)
+
+# 添加一个自定义命令，用于生成 output.txt 文件
+add_custom_command(OUTPUT output.txt
+                   COMMAND echo "Hello, World!" >> output3.txt
+                   COMMENT "Generating output file"
+                   VERBATIM)
+
+# 添加一个自定义命令，用于在 output.txt 文件末尾追加一行
+add_custom_command(OUTPUT output2.txt
+                   COMMAND echo "This is an appended line." >> output3.txt
+                   COMMENT "Appending to output file"
+                   VERBATIM
+                   )
+
+#This is an appended line2222.必定跟在 Hello，World打印后面!
+add_custom_command(OUTPUT output.txt
+                   COMMAND echo "This is an appended line2222." >> output3.txt
+                   COMMENT "Appending to output file"
+                   VERBATIM
+                   APPEND
+                   )
+
+
+# 将 output.txt 文件添加到构建目标中
+add_executable(MyTarget main.c output.txt output2.txt)
+
+# 将 output.txt和output2.txt 文件添加到构建目标中
+
+add_executable(MyTarget main.c output.txt output2.txt)
 ```
 
