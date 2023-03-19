@@ -74,6 +74,27 @@ void convertTo( OutputArray m, int rtype, double alpha=1, double beta=0 ) const;
 					m(x,y) = static_cast<type>(a * origin(x,y) + b )
 ```
 
+`转换通道矩阵`
+
+```c++
+Mat reshape(int cn, int rows=0) const;
+```
+
+* cn：转换后通道数
+* rows：转换后行数，0表示转换后行数不变。
+
+注意转换过程中数据的丢失！
+
+`深拷贝`
+
+```c++
+void copyTo( OutputArray m ) const;
+
+void copyTo( OutputArray m, InputArray mask ) const;
+```
+
+* mask：掩码矩阵，最好尺寸同src，该矩阵的数据类型只能为CV_8UC1，当对应位置的数据不为0时，表示需要该位置的数据，将会以原值输出到dst对应位置，否则将会以0输出到输出的矩阵对应位置。
+
 ## Mat常用构造函数
 
 > 空构造
