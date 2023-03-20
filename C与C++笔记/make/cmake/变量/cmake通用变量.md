@@ -47,3 +47,12 @@ set(CMAKE_PREFIX_PATH "/Qt/Qt5.9.9/5.9.9/mingw53_32/;D:/Qt/;/bin1/;/bin2/;/bin3/
 CMAKE_CURRENT_SOURCE_DIR：CMakeList.txt所在的目录
 CMAKE_CURRENT_LIST_DIR：CMakeList.txt的完整路径
 CMAKE_CURRENT_LIST_LINE：当前所在的行
+
+## CMAKE_COMMAND
+
+CMake 完整的路径以及CMake程序 ，例如
+
+```bash
+/home/thisIsUser/cmake_dir/bin/cmake
+```
+
