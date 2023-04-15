@@ -129,6 +129,8 @@ CURLOPT_READDATA //设置读取数据的位置，如文件指针、缓冲区等�
 CURLOPT_WRITEFUNCTION //设置自定义返回数据处理回调
     
 CURLSHOPT_USERDATA		//设置传入回调函数的共享数据，所有回调通用
+  
+CURLOPT_HTTPPOST			//用于指定一个 curl_httppost 结构体链表，告诉 curl 用于发送 POST 请求的数据。这个链表中包含了 POST 请求的键值对、文件等数据信息。使用 CURLOPT_HTTPPOST 选项时，curl 会自动使用 multipart/form-data 格式对数据进行编码，包括普通文本数据和二进制文件数据。
 ```
 
 >  `自定义数据处理函数定义`
