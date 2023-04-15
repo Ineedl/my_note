@@ -4,8 +4,6 @@ POCO包含一个现成的HTTP服务器框架，该框架在HTTP服务上具有�
 
 * 多线程的HTTP处理
 
-  
-
 * HTTP 1.0/1.1 版本的支持
 
 * Http authentication 校验支持
