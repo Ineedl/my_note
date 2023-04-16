@@ -470,37 +470,67 @@ void sendErrorResponse(HTTPStatus status, const std::string& message);
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Util/ServerApplication.h>
+#include <Poco/Net/HTTPServerRequest.h>
 
 #include <iostream>
-#include <time.h>
 #include <vector>
+#include <functional>
 
-class MyRequestHandler : public HTTPRequestHandler
+class MyResponse{
+public:
+    MyResponse(int status,std::string data):m_status(status),m_respData(data){
+
+    }
+    std::string& data(){
+        return m_respData;
+    }
+    int status(){
+        return m_status;
+    }
+private:
+    int m_status;
+    std::string m_respData;
+};
+
+class MyRequestHandler : public Poco::Net::HTTPRequestHandler
 {
 public:
-    LocalWebRequestHandler(){
-      handlers_["/api/login"] = std::bind(&LocalWebRequestHandler::login, this, std::placeholders::_1);
-  		handlers_["/api/logout"] = std::bind(&LocalWebRequestHandler::logout, this, std::placeholders::_1);
+    MyRequestHandler(){
+        m_handlers["/hello"] = std::bind(&MyRequestHandler::hello,this,std::placeholders::_1);
+        m_handlers["/go"] = std::bind(&MyRequestHandler::go,this,std::placeholders::_1);
+
+        m_statusMap[404] = Poco::Net::HTTPResponse::HTTP_NOT_FOUND;
+        m_statusMap[500] = Poco::Net::HTTPResponse::HTTP_INTERNAL_SERVER_ERROR;
+        m_statusMap[200] = Poco::Net::HTTPResponse::HTTP_OK;
     }
 
-    void handleRequest(HTTPServerRequest &request, HTTPServerResponse &response) override{
-    	//进行http处理  
+    virtual void handleRequest(Poco::Net::HTTPServerRequest &req, Poco::Net::HTTPServerResponse &resp)
+    {
+        if(m_handlers.find(req.getURI())==m_handlers.end()){
+            resp.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
+            resp.setContentType("text/html");
+            resp.send()<<"not found";
+        }else{
+            MyResponse response = m_handlers[req.getURI()](req);
+            resp.setStatus(m_statusMap[response.status()]);
+            resp.setContentType("text/plain");
+            resp.send()<<response.data();
+            resp.send().flush();
+        }
     }
-    
+
+    MyResponse hello(Poco::Net::HTTPServerRequest &req){
+        return MyResponse(200,"hello");
+    }
+
+    MyResponse go(Poco::Net::HTTPServerRequest &req){
+        return MyResponse(200,"go");
+    }
 
 private:
-    LocalWebResponse login(HTTPServerRequest &request){
-   		//此处省略处理
-    }
-
-    LocalWebResponse logout(HTTPServerRequest &request){
-      //此处省略处理
-		}
-  
-  	std::map<std::string, std::function<LocalWebResponse(HTTPServerRequest &request)>> handlers_;
-
-}
-
+    std::map<std::string,std::function<MyResponse(Poco::Net::HTTPServerRequest&)>> m_handlers;
+    std::map<unsigned int,Poco::Net::HTTPResponse::HTTPStatus> m_statusMap;
+};
 
 class MyRequestHandlerFactory : public Poco::Net::HTTPRequestHandlerFactory
 {
@@ -517,17 +547,14 @@ int main(int argc, char **argv)
     Poco::Net::HTTPServer s(new MyRequestHandlerFactory, Poco::Net::SocketAddress("127.0.0.1:8080"), new Poco::Net::HTTPServerParams);
 
     s.start();
-    std::cout<< "Server started" << std::endl;
 
     while(1){
-      sleep(10);
+        sleep(10000);
     }
-
-    return 0;
 }
+
+
 ```
-
-
 
 
 
