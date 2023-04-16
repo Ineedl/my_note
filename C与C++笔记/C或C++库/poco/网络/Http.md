@@ -295,10 +295,13 @@ void setContentLength(std::streamsize length);
 > 使用流发送响应
 
 ```c++
-void send(std::ostream& ostr);
+std::ostream& send();
 ```
 
+* 向客户端发送响应头，并返回用于发送响应体的输出流。返回的流一直有效，直到响应对象被销毁。不能在sendFile()， sendBuffer()或redirect()被调用之后调用。
 * 在写入完所有响应数据后，必须调用`ostr.flush()`来确保所有数据都已发送。
+* 该流对象一直有效，直到response对象被摧毁。
+* 该函数适合传递视频推流等这些持久的流数据，当然也可以短暂的发送一些字符数据。
 * send也可以发送完整的HTTP响应，比如
 
 ```c++
@@ -309,9 +312,8 @@ responseStream << "HTTP/1.1 200 OK\r\n"
                << "<html><body><h1>Hello, world!</h1></body></html>";
 
 response.send() << responseStream.str();
+response.send().flush();
 ```
-
-
 
 
 
@@ -320,6 +322,8 @@ response.send() << responseStream.str();
 ```c++
 void sendFile(const std::string& path, const std::string& mediaType = "");
 ```
+
+* 该函数调用后，会立刻返回HTTP响应，之后不应该对响应体操作。
 
 
 
@@ -342,6 +346,8 @@ std::string responseString = responseStream.str();
 response.sendBuffer(responseString.c_str(), responseString.length());
 ```
 
+* 该函数调用后，会立刻返回HTTP响应，之后不应该对响应体操作。
+
 
 
 > 发送字符串作为响应
@@ -362,7 +368,7 @@ responseStream << "HTTP/1.1 200 OK\r\n"
 response.sendString(responseStream.str());
 ```
 
-
+* 该函数调用后，会立刻返回HTTP响应，之后不应该对响应体操作。
 
 
 
