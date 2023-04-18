@@ -429,3 +429,52 @@ std::cout << j << std::endl;
 auto p2 = j.get<ns::person>();
 ```
 
+
+
+> size()和at(n)
+
+对于是数组的某部分json，可以用size()来获取长度，可以用at(n)来获取第n个成员
+
+```
+/*
+{
+	"port": "8888",
+	"responses": [
+		{
+			"api_path": "/api/test",
+			"response": {
+				"hello": "world"
+			}
+		},
+		{
+			"api_path": "/api/test2",
+			"response": {
+				"hello2": "world2"
+			}
+		}
+	]
+}
+*/
+#include "json.hpp"
+#include<iostream>
+int main(int argc, char** argv)
+{
+
+    std::ifstream i("config.json");
+    i>>globalConf;
+    i.close();
+    if(globalConf.is_null()){
+        return -1;
+    }
+    std::string address = "127.0.0.1:";
+    address += globalConf.at("port");
+    std::cout << "addtess:" << address << std::endl;
+    std::cout <<"path num:" << globalConf["responses"].size() << std::endl;
+
+    for (int i = 0; i < globalConf["responses"].size(); i++) {
+        std::cout << "path:" << globalConf["responses"].at(i).at("api_path") << std::endl;
+    }
+    return 0;
+}
+```
+
