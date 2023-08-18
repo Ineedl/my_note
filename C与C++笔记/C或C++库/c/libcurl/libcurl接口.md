@@ -114,7 +114,7 @@ CURLOPT_TIMEOUT //设置请求超时时间。
 
 CURLOPT_CONNECTTIMEOUT //设置连接超时时间。
 
-CURLOPT_SSL_VERIFYPEER //设置是否验证 SSL 证书。
+CURLOPT_SSL_VERIFYPEER //设置是否验证 SSL 证书。		//该选项和下面的选项同时设置表示该协议启用了ssl
 
 CURLOPT_SSL_VERIFYHOST //设置是否验证 SSL 证书主机名。
 
