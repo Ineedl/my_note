@@ -1,0 +1,223 @@
+运算符重载有两种方式
+
+一种是类内重载（运算符重载函数作为类的成员函数）
+
+另一种是类外重载（运算符重载函数作为类的友元函数）
+
+注意：类中重载不可一被static修饰(原因很简单，一般需要this指针)，但是类外的运算符重载可以为static修饰
+
+运算符重载是类内重载时，运算符重载函数作为类的成员函数
+例子:
+	class Point{
+	public:
+		Point(){};
+		Point (int x, int y): x(x),y(y) {};
+		Point operator+(const Point &a){ //类内重载，运算符重载函数作为类的成员函数
+			Point ret;
+			ret.x = this->x + a.x;
+			ret.y = this->y + a.y;
+			return ret;
+		}
+		int x,y;
+	};
+	
+运算符重载时类外重载,运算符重载函数作为类的友元函数
+例子:
+class Point{
+public:
+    Point(){};
+    Point (int x, int y): x(x),y(y) {};
+    friend Point operator+(const Point &, const Point &);
+    int x,y;
+};
+
+Point operator+(const Point &a,const Point &b){//类外重载,运算符重载函数作为类的友元函数
+    Point ret;
+    ret.x = a.x + b.x;
+    ret.y = a.y + b.y;
+    return ret;
+}
+
+可重载运算符/不可重载运算符
+
+下面是可重载的运算符列表：
+	双目算术运算符	
+						+
+						-
+						*				(可乘法)
+						/
+						%
+						
+	关系运算符	
+						==
+						!=
+						< 
+						> 
+						<=
+						>=
+						
+	逻辑运算符	
+						||
+						&&
+						!
+						
+	单目运算符	
+						+				(正)
+						-				(负)
+						*				(可指针)	
+						&				(取地址)
+						
+	自增自减运算符	
+						++				(自增)						//operator++()表示前缀++:++i
+																	//operator++(int)表示后缀++:i++
+						--				(自减)						//同上
+						
+	位运算符	
+						| 				(按位或)，
+						& 				(按位与)，
+						~				(按位取反)，
+						^				(按位异或)，
+						<< 				(左移)，
+						>>				(右移)
+	赋值运算符	
+						=，
+						+=，
+						-=，
+						*=，
+						/=，
+						%=，
+						&=，
+						|=，
+						^=，
+						<<=，
+						>>=
+						
+	空间申请与释放	
+						new，
+						delete，
+						new[] ，
+						delete[]，
+	其他运算符	
+						()(函数调用)，
+						->(成员访问)，
+						(逗号)，
+						[](下标)
+						
+下面是不可重载的运算符列表：
+
+						.					成员访问运算符
+						.*,与->*			成员指针访问运算符
+						::					域运算符
+						sizeof				长度运算符
+						?:					条件运算符
+						#	 				预处理符号
+
+						
+运算符重载实例
+1.一元运算符重载	(如同i++,i--,-i这种,不做概述)
+
+2.二元运算符重载	(如同a+b,a-b,a*b,这里不做概述)
+
+	注意一元与二元重载时的区别,在类中时一元运算符重载函数没有参数,二元有1个参数
+								(在C++每个类的成员函数中,除了static函数外,每个成员函数都有个this指针指向调用该成员函数的对象)
+								在类外时一元运算符重载函数有1个参数,二元有2个参数
+								
+3.函数调用运算符 () 重载		//()运算符参数可以有无数个
+	例：
+	class Distance
+	{
+		private:
+			  int feet;            
+			  int inches;           
+		public:
+
+			  Distance(int f, int i){
+				 feet = f;
+				 inches = i;
+			  }
+			  // 重载函数调用运算符
+			  Distance operator()(int a, int b, int c)
+			  {
+				 Distance D;
+				 // 进行随机计算
+				 D.feet = a + c + 10;
+				 D.inches = b + c + 100 ;
+				 return D;
+			  }
+			  
+	};
+	int main()
+	{
+		Distance D1(11, 10), D2;
+		D2 = D1(10, 10, 10);
+	}
+
+4.下标运算符 [] 重载			//[]重载函数参数值只能由一个,该参数类型必须是int或是调用该符号重载函数的函数的类
+	例子
+	#include <iostream>
+	using namespace std;
+	const int SIZE = 10;
+	 
+	class safearay
+	{
+	   private:
+		  int arr[SIZE];
+	   public:
+		  safearay() 
+		  {
+			 register int i;
+			 for(i = 0; i < SIZE; i++)
+			 {
+			   arr[i] = i;
+			 }
+		  }
+		  int& operator[](int i)						//该运算符重载函数参数类型必须为int或该类safearay,在类外面也是这两个(取决于调用他的类)
+		  {
+			  if( i > SIZE )
+			  {
+				  cout << "索引超过最大值" <<endl; 
+				  // 返回第一个元素
+				  return arr[0];
+			  }
+			  return arr[i];
+		  }
+	};
+	int main()
+	{
+	   safearay A;
+	 
+	   cout << "A[2] 的值为 : " << A[2] <<endl;
+	   cout << "A[5] 的值为 : " << A[5]<<endl;
+	   cout << "A[12] 的值为 : " << A[12]<<endl;
+	 
+	   return 0;
+	}
+
+5.new，delete，new[]，delete[]等符号重载只是相当于对operator new等重载，而实际的new里面使用到了operator
+
+6.有部分运算符不可以在类中重载,比如<<与>>;
+
+7.注意重载->与<-会让你很难受
+	例子
+	tmplate<class T>
+	class shared_ptr
+	{
+		public:
+			T& operator*() const { return *px;}
+			T* operator->() const {return px;}
+			shared_ptr(T* p):px(p){}
+		private:
+			T* px;
+			long* pn;
+	};
+	
+	shared_ptr<Object> NbP(new Object);
+	Object f(*NbP);			//假设Object中有void类型和void参数的run方法
+	NbP->run();				//相当于f.run();
+							//原理:重载->，使用->返回一个Object*类型，然后再用->调用其类中方法
+							//c++中规定->与<-作用下去后，会继续对该符号作用下去，相当于一个->或<-多用
+							//上述相当于->作用了两次，但是只需要写一次 
+	->符号会追溯,但是注意*符号并不会
+	
+8.初始化列表不会触发()重载.	
+	
