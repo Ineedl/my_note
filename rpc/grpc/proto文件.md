@@ -133,6 +133,21 @@ message Foo {
 
 
 
+## required标记和optional标记
+
+* required用于message内的字段中，表示该字段是必须的，在rpc调用时，必须不为空，否则报错
+* optional用于message内的字段中，表示该字段是可选的，在rpc调用时，可以为空，否则报错，什么都不标记时默认是optional标记
+
+```protobuf
+message InnerMessage {
+    required int32 inner_number = 1;
+    optional string inner_name = 2;
+    string inner_name2 = 3; //默认optional
+}
+```
+
+
+
 ## rpc定义
 
 使用service字段来定义一个rpc接口
@@ -146,3 +161,45 @@ service <service_name> {
 ### 多个service和单个service的区别
 
 实现上，每个service在常见的编程语言中，会被实现为一组接口(java中的interface，go中的interface，C++中的纯虚函数)等，并且对这些接口进行一个基础的实现，以方便开发者扩展。
+
+
+
+## package关键字
+
+**package**是proto的包名,一个文件就是一个package
+
+```
+syntax = "proto3";
+
+package proto;	//声明包为proto
+```
+
+
+
+
+
+## option关键字
+
+.proto文件中的个别声明可以被一定数据的选项(option)注解. 选项不改变声明的整体意义, 但是在特定上下文会影响它被处理的方式. 可用选项的完整列表定义在google/protobuf/descriptor.proto.
+
+有些选项是文件级别, 意味着他们应该写在顶级范围, 而不是在任何消息,枚举,或者服务定义之内. 有些选项时消息级别, 意味着他们应该写在消息定义内. 有些选项是字段级别, 意味着他们应该写在字段定义内. 选项也可以写在枚举类型, 枚举值, 服务定义和服务方法上. 但是, 目前没有任何有用的选项存在这些地方.
+
+
+
+这些选项使用option关键字来声明，一般不怎么使用，此处忽略。
+
+
+
+使用例子：
+
+```protobuf
+syntax = "proto3";
+
+package proto;	//声明包为proto
+
+option go_package = "github.com/wymli/bc_sns/dep/pb/go/enumx;enumx";
+//这里逗号（；）
+//后面是就是生成go代码时，package名
+//前面是生成代码时，如果其他proto 引用 了这个proto，那么他们就会使用逗号（；）前面的作为go包路径
+```
+
