@@ -201,5 +201,6 @@ option go_package = "github.com/wymli/bc_sns/dep/pb/go/enumx;enumx";
 //这里逗号（；）
 //后面是就是生成go代码时，package名
 //前面是生成代码时，如果其他proto 引用 了这个proto，那么他们就会使用逗号（；）前面的作为go包路径
+//不加;则表示两种意思
 ```
 
