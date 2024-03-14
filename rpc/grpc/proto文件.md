@@ -8,7 +8,7 @@ proto文件的开头需要声明版本号，此处开头如下
 syntax = "proto3";
 ```
 
-* 不加默认proto
+* 不加默认proto2
 
 ## 消息类型
 

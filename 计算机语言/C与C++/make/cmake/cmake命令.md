@@ -1,4 +1,7 @@
+[toc]
+
 ## cmake_minimum_required
+
 要求最低的cmake版本号
 ```cmake
 cmake_minimum_required (VERSION 2.8)
@@ -8,6 +11,7 @@ cmake_minimum_required (VERSION 2.8)
 指定项目名，项目信息
 
 `原型`
+
 ```cmake
 roject(<PROJECT-NAME> [LANGUAGES] [<language-name>...])
 ```
@@ -391,3 +395,45 @@ add_executable(MyTarget main.c output.txt output2.txt)
 add_executable(MyTarget main.c output.txt output2.txt)
 ```
 
+## add_subdirectory
+
+用于添加子目录到当前项目
+
+```cmake
+add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
+```
+
+- `source_dir`: 子目录的路径，该路径是相对于包含`add_subdirectory`命令的CMakeLists.txt文件的路径。
+- `binary_dir`: 可选参数，该参数指定一个目录，用于存放输出文件。可以是相对路径也可以是绝对路径，如果是相对路径，则是相对当前输出目录的一个相对路径。如果该参数没有指定，则默认的输出目录使用`source_dir`。
+- `EXCLUDE_FROM_ALL`: 可选参数，指定了该参数，则子目录下的目标不会被父目录下的目标文件包含进去，父目录的`CMakeLists.txt`不会构建子目录的目标文件，必须在子目录下显式去构建。`例外情况：当父目录的目标依赖于子目录的目标，则子目录的目标仍然会被构建出来以满足依赖关系（例如使用了target_link_libraries）`。
+
+## target_include_directories
+
+用于指定特定目标（target）的头文件包含路径的命令。它的作用是将特定目标所需要的头文件路径添加到编译过程中。
+
+该命令一半在子项目中用于添加包含目录。
+
+```cmake
+target_include_directories(target_name [SYSTEM] [BEFORE|AFTER]
+    [INTERFACE | PUBLIC | PRIVATE] [items1...]
+    [INTERFACE | PUBLIC | PRIVATE] [items2...]
+    ...)
+```
+
+
+
+- `target_name`: 目标名称，指定要为其设置包含路径的目标。
+
+- `SYSTEM`: 可选参数，如果指定，表示将这些目录标记为系统目录，这会告诉编译器忽略其中的警告。
+
+- `BEFORE|AFTER`: 可选参数，如果指定BEFORE，将把指定的路径添加到已有的路径之前。否则，会添加到已有路径的末尾。默认AFTER
+
+- `INTERFACE，PUBLIC，PRIVATE`：
+
+  : 这些关键字用于指定添加路径的作用范围。区别如下：
+
+  - `INTERFACE`: 指示指定的目录仅对目标的接口可见，用于依赖项的编译。
+  - `PUBLIC`: 指示指定的目录对所有依赖于目标的项目可见。（PUBLIC约等于INTERFACE）
+  - `PRIVATE`: 关键字指示指定的目录仅对目标本身可见。
+
+通常情况下，你可以使用`PUBLIC`来将包含路径传递给依赖的目标，使用`PRIVATE`来指定仅在当前目标中使用的包含路径。
