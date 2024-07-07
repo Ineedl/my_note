@@ -1,6 +1,6 @@
 [toc]
 
-## 参考yaml
+## 简单版yaml配置(删除大部分不太重要后的配置)
 
 * 该yaml同时创建了一个service
 
@@ -25,6 +25,10 @@ metadata:
   name: web
 spec:
   serviceName: "nginx" #使用哪个service来管理dns
+  updateStrategy:		#更新策略
+  	rollingUpdate:		#滚动更新策略
+  		partition: 3	#灰度更新序号
+  	type: RollingUpdate	#滚动更新
   replicas: 2
   selector:
     matchLabels:
@@ -106,3 +110,65 @@ kubectl rollout resume sts <deploy_name> #恢复更新
 #### 原理
 
 StatefullSet进行滚动更新时，会逐步的、一个个的关闭原有的旧版本pod，并启动新版本pod，(关闭一个、开一个)。
+
+#### 灰度发布
+
+灰度发布在滚动更新的基础上，允许先更新一部分，当这部分更新成功后，再更新后续的部分
+
+灰度发布为statefulSet设置滚动更新后，更改`updateStrategy.rollingUpdate.partition`的值来实现
+
+该值为一个数字，表示将statefulSet管理的pod用简单数字序列号排序后(10个容器为1-10)，在进行滚动更新时，只更新序号大于等于几的容器
+
+### 设置
+
+```txt
+apiVersion: apps/v1
+kind: StatefulSet
+...
+...
+spce:
+  ...
+  spec:
+    containers:
+    ...
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
+```
+
+
+
+## 删除更新
+
+删除pod时，对pod进行更新
+
+### 设置
+
+```txt
+apiVersion: apps/v1
+kind: StatefulSet
+...
+...
+spce:
+  ...
+  spec:
+    containers:
+    ...
+  updateStrategy:
+    type: OnDelete
+```
+
+
+
+## 级联删除
+
+默认删除sts时，将会删除所有的pod
+
+* sts的删除不影响生成的services。
+
+### 非级联删除
+
+```txt
+kubectl delete stat <sts_name> --cascade=false
+```
