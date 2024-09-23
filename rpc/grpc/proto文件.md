@@ -198,9 +198,47 @@ syntax = "proto3";
 package proto;	//声明包为proto
 
 option go_package = "github.com/wymli/bc_sns/dep/pb/go/enumx;enumx";
-//这里逗号（；）
-//后面是就是生成go代码时，package名
-//前面是生成代码时，如果其他proto 引用 了这个proto，那么他们就会使用逗号（；）前面的作为go包路径
-//不加;则表示两种意思
+//;分割开后 后面是就是生成go代码时，package名，前面的为该go代码包路径
+//如果没有;只有前面的那一串，则同时表示包名和包路径两个意义
+
+```
+
+
+
+## stream
+
+请求和响应中添加stream在grpc中将表示这次的请求体或响应体是流式传输
+
+例:
+
+```protobuf
+syntax = "proto3";
+
+package chat;
+
+// 定义消息格式
+message ChatMessage {
+  string user = 1;      // 发送消息的用户
+  string message = 2;   // 消息内容
+  int64 timestamp = 3;  // 时间戳
+}
+
+message Empty {}
+
+// 定义服务接口
+service ChatService {
+  
+  // 单次请求/响应：客户端发送一条消息，服务器返回确认信息
+  rpc SendMessage (ChatMessage) returns (Empty);
+
+  // 服务器流：客户端请求消息历史记录，服务器流式返回所有聊天记录
+  rpc GetMessageHistory (Empty) returns (stream ChatMessage);
+
+  // 客户端流：客户端上传多条消息，服务器在结束后返回确认
+  rpc SendMultipleMessages (stream ChatMessage) returns (Empty);
+
+  // 双向流：客户端和服务器可以实时进行双向聊天
+  rpc ChatStream (stream ChatMessage) returns (stream ChatMessage);
+}
 ```
 

@@ -1919,6 +1919,8 @@ private:
 			{
 				cout<<this<<endl;
 			}
+		public:
+			int a;
 	};
 	int main()
 	{
