@@ -12,4 +12,4 @@
 
 ## 安装
 
-使用Ingress需要使用k8s的包管理器来安装Ingress。
+使用Ingress需要使用k8s的包管理器或者直接使用yaml来安装Ingress。
