@@ -32,6 +32,20 @@ kubectl create configmap <configmap_name> --from-file=[key=]<file_path>
 #key表示创建cm时，使用该key值代替文件名，如果没有，默认key值为文件名
 ```
 
+## 查看configMap
+
+```
+kubectl describe cm <cm_name>
+```
+
+## 只读configMap
+
+编辑已有的configMap，在最外层配置添加
+
+```yml
+immutable: true
+```
+
 ## pod中configMap的引用
 
 ### 直接引用
@@ -68,12 +82,12 @@ metadata:
 spec:
 	containers:
 	......
-	env:
-	  volumeMounts:
-	  - name: db-config    #挂载volumes中哪个数据卷
-	    mountPath: "/home/test" #将数据卷中的文件加载到哪个目录下
-	    readOnly: true #只读
-	    subPath: <file_path> #
+	- image: ...
+      volumeMounts:
+      - name: db-config    #挂载volumes中哪个数据卷
+        mountPath: "/home/test" #将数据卷中的文件加载到哪个目录下
+        readOnly: true #只读
+        subPath: <file_path> #
 	volumes:
 	  - name: db-config	#数据卷名称
 	    configMap: #使用configMap
@@ -110,15 +124,15 @@ spec:
           defaultMode: 420
 ```
 
+## configMap热更新
 
+configMap更新时影响容器存在以下情况
 
+* 使用文件加载方式的挂载(不使用subPath)：会更新，周期是更新时间+缓存时间
+* subPath挂载：不会更新
+* 变量加载形式：不会更新
 
+### 实现热更新方法
 
-
-
-## 查看configMap
-
-```
-kubectl describe cm <cm_name>
-```
+使用subPath，但是容器启动时，删除原先映射文件，将原先映射文件改为软连接subPath文件(使用钩子函数实现)
 
