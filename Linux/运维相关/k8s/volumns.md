@@ -68,3 +68,31 @@ spec:
 ```
 
 上述配置将co1和co2的两个指定目录共享了，即co1的/home/test1和co2的/home/test2中的内容共享。
+
+
+
+
+
+## NFS
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfs-test-pd1
+spec:
+  containers:
+  - image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/nginx:1.27.0
+    name: test-container
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html	#挂载目录
+      name: test-volume
+  volumes:
+  - name: test-volume
+    nfs:
+      server: 192.168.1.39			#使用主机可以连接的服务器的nfs服务
+      path: /home/jiahui/nfs/rw/www/jiahui #nfs服务目录
+      readOnly: false
+
+```
+
