@@ -1,0 +1,32 @@
+## api文件
+
+api文件为gozero官方自创语法文件，其用于对某个服务所有api的描述，并且可以通过该文件来对gozero框架的进行各种控制。
+
+## demo
+
+```
+type LoginRequest {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type LoginResponse {
+	Code string `json:"code"`
+	Data string `json:"data"`
+	Msg  string `json:"msg"`
+}
+
+type UserInfoResponse {
+	UserId   uint   `json:"user_id"`
+	Username string `json:"username"`
+}
+
+service User{
+	@handler login
+	post /api/users/login(LoginRequest) returns(LoginResponse)
+
+	@handler userInfo
+	get /api/users/info returns(UserInfoResponse)
+}
+```
+
