@@ -55,4 +55,3 @@ CMake 完整的路径以及CMake程序 ，例如
 ```bash
 /home/thisIsUser/cmake_dir/bin/cmake
 ```
-

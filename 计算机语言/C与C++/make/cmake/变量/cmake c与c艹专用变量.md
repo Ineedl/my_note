@@ -30,3 +30,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # 指定为C++11 版本
 set(CMAKE_CXX_STANDARD 11)
 ```
+
+## CMAKE_C_COMPILER 
+
+指定c编译器
+
+## CMAKE_CXX_COMPILER 
+
+指定c++编译器

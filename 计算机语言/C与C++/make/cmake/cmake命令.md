@@ -17,6 +17,7 @@ roject(<PROJECT-NAME> [LANGUAGES] [<language-name>...])
 ```
 
 `例子`
+
 ```cmake
 project (projectName)
 ```
@@ -81,18 +82,11 @@ MODULE: 类似于动态库，模块库是没有链接到其他目标的插件，
 EXCLUDE_FROM_ALL: 设置EXCLUDE_FROM_ALL，可使这个library排除在all之外，即必须明确点击生成才会生成。
 
 
-`例子`
-```cmake
-
-```
-
-
 ## aux_source_directory
 
 > * 特别注意
 CMake官方不推荐使用aux_source_directory及其类似命令(file(GLOB_RECURSE …))来搜索源文件，
-如果我再在被搜索的路径下添加源文件，我不需要修改CMakeLists脚本，  
-也就是说，源文件多了，而CMakeLists并不需要(没有)变化，也就使得构建系统不能察觉到新加的文件，  
+如果我再在被搜索的路径下添加源文件，我不需要修改CMakeLists脚本，  也就是说，源文件多了，而CMakeLists并不需要(没有)变化，也就使得构建系统不能察觉到新加的文件， 
 除非手动重新运行cmake，否则新添加的文件就不会被编译到项目结果中。
 
 指定目录下所有的源文件
@@ -411,6 +405,8 @@ add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 
 用于指定特定目标（target）的头文件包含路径的命令。它的作用是将特定目标所需要的头文件路径添加到编译过程中。
 
+* target_include_directories相较于include_directories来说更具体，他范围更小，不会影响全局。
+
 该命令一半在子项目中用于添加包含目录。
 
 ```cmake
@@ -432,7 +428,7 @@ target_include_directories(target_name [SYSTEM] [BEFORE|AFTER]
 
   : 这些关键字用于指定添加路径的作用范围。区别如下：
 
-  - `INTERFACE`: 指示指定的目录仅对目标的接口可见，用于依赖项的编译。
+  - `INTERFACE`: 指示指定的目录仅对目标的接口可见，用于依赖项的编译，其他依赖该目标的库或可执行文件在编译时会看到这些包含目录。
   - `PUBLIC`: 指示指定的目录对所有依赖于目标的项目可见。（PUBLIC约等于INTERFACE）
   - `PRIVATE`: 关键字指示指定的目录仅对目标本身可见。
 
