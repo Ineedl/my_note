@@ -55,3 +55,26 @@ CMake 完整的路径以及CMake程序 ，例如
 ```bash
 /home/thisIsUser/cmake_dir/bin/cmake
 ```
+
+## CMAKE_SYSTEM_NAME
+
+设置目标系统，设置 `CMAKE_SYSTEM_NAME` 变量后，CMake 会根据该值调整编译过程中的一些行为，特别是在交叉编译时，它会决定目标操作系统的配置。这个变量对于构建系统的设置、工具链选择、库和头文件的查找路径等都有直接影响。
+
+常见有：
+
+* Linux
+* Windows
+* Darwin
+* Android
+* IOS
+
+## CMAKE_SYSTEM_PROCESSOR
+
+设置系统架构，设置 `CMAKE_SYSTEM_PROCESSOR` 后，CMake 会根据指定的处理器架构来调整项目的构建过程，确保适用于目标架构的编译工具和库被正确使用。
+
+常见由：
+
+* arm
+* arm64
+* x86
+* x86_64
