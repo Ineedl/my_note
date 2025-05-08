@@ -186,7 +186,30 @@ add_subdirectory(math)
 add_subdirectory(${TOP_DIR}/hello hello_binary_dir)
 ```
 
+## set_target_properties
+
+对一个或多个目标设置多个属性。
+
+```
+set_target_properties(<target1> <target2> ...
+                      PROPERTIES <prop1> <value1>
+                                  <prop2> <value2> ...)
+```
+
+`常见用法：`
+
+强制链接使用静态库
+
+```cmake
+add_library(test_static STATIC IMPORTED)
+set_target_properties(test_static PROPERTIES IMPORTED_LOCATION "/path/to/libfoo.a")
+target_link_libraries(test
+        test_static
+)
+```
+
 ## include_directories
+
 添加头文件目录
 
 `原型`
