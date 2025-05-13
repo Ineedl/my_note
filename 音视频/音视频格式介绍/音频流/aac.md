@@ -1,3 +1,5 @@
+[toc]
+
 ## AAC的组成
 
 AAC音频文件的每一帧都由一个ADTS头和AAC ES(AAC音频数据)组成。
@@ -17,6 +19,8 @@ ADTS头包含了AAC文件的采样率、通道数、帧数据长度等信息。A
 
 
 ADTS的头信息分为：固定头信息(adts_fixed_header)和可变头信息(adts_variable_header)两部分。如果数据有CRC，最后还要加上CRC内容(16bit)。
+
+* **CRC（Cyclic Redundancy Check，循环冗余校验）** 是一种用于检测数据在传输或存储过程中是否发生错误的 **校验算法**，广泛用于网络通信、存储设备、压缩文件等领域。
 
 
 
@@ -43,8 +47,6 @@ adts_variable_header的每一帧的内容是存在变化的。
 | channel_configuration    | 3                                                            | 声道数标识                                                   |
 | original_copy            | 1                                                            | 编码时设置为0，解码时忽略                                    |
 | home                     | 1                                                            | 编码时设置为0，解码时忽略                                    |
-
-
 
 > 关于采样率下标
 
@@ -95,6 +97,13 @@ adts_variable_header的每一帧的内容是存在变化的。
 | aac_frame_lenght                    | 13                                                           | 帧长度,包括header和crc的长度                                 |
 | adts_buffer_fullness                | 11                                                           | 当设置为0x7FF时表示时可变码率                                |
 | number_of_raw_data_blocks_in_frames | 2                                                            | 当前音频包里面包含的音频编码帧数， 置为 aac_nums - 1, 即只有一帧音频时置0 |
+
+## ES
+
+使用AAC相关算法压缩后的数据。
+
+* 一般MP4、FLV、RTMP等不需要AAC头
+* TS、原始AAC中需要AAC头
 
 
 
