@@ -100,6 +100,8 @@ clean:
 
 ## 头文件更新判断
 
+* gcc -MM的作用：生成文件依赖关系，包括头文件的
+
 ```makefile
 # 列出所有 .c 文件:
 SRCS = $(wildcard *.c)
