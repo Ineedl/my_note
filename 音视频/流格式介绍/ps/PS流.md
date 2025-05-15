@@ -2,9 +2,9 @@
 
 ## 介绍
 
-Program Stream(节目流)，简称PS流，将一个或多个分组但有共同的时间基准的基本数据流(PES)合并成一个整体流,由PS包组成，而一个PS包又由若干个PES包组成（到这里，ES经过了两层的封装）。PS包的包头中包含了同步信息与时钟恢复信息。一个PS包最多可包含具有同一时钟基准的16个视频PES包和32个音频PES包。
+Program Stream(节目流)，简称PS流，将一个或多个分组但有共同的时间基准的基本数据流(PES)合并成一个整体流,由PS包组成，而一个PS包又由若干个PES包组成（到这里，ES经过了两层的封装，第一层PES 第二层PS）。PS包的包头中包含了同步信息与时钟恢复信息。一个PS包最多可包含具有同一时钟基准的16个视频PES包和32个音频PES包。
 
-
+* PS流适合本地存储，低误码率，不能容忍丢包，大型包，适合顺序读写
 
 ## 结构
 
@@ -164,24 +164,25 @@ P-STD_buffer_size_bound  = 1000
 
 节目流映射，PSM 提供节目流中基本流的描述及其相互关系。作为一个PES分组出现。
 
-| 字段                          | 长度  | 介绍                                                         |
-| ----------------------------- | ----- | ------------------------------------------------------------ |
-| packet_start_code_prefix      | 24bit | 同跟随它的 map_stream_id 一起组成包起始码标识包的始端。固定为 0x000001。 |
-| map_stream_id                 | 8bit  | 固定为0xBC                                                   |
-| program_stream_map_length     | 16bit | 表示该字段之后PSM的长度                                      |
-| current_next_indicator        | 1bit  | 置‘ 1’时指示发送的节目流映射为当前有效。置‘ 0’时，表示下一个节目流映射表将生效。 |
-| reserved                      | 2bit  | 保留位字段                                                   |
-| program_stream_map_version    | 5bit  | 节目流映射版本<br />整个节目流映射的版本号。每当节目流映射的定义改变时，该版本号必须增 1 模 32。 current_next_indicator 置为‘ 1’时， program_stream_map_version 应是当前有效的节目流映射的版本。 current_next_indicator 设置为‘ 0’时， program_stream_map_version 应是下一个有效的节目流映射的版本。 |
-| reserved                      | 7bit  | 保留位字段                                                   |
-| marker_bit                    | 1bit  | 标记位字段                                                   |
-| program_stream_info_length    | 16bit | 表示了该字段之后描述的长度                                   |
-| ps描述                        | nbit  | ps信息描述                                                   |
-| elementary_stream_map_length  | 16bit | ES流信息总长度，。它包括stream_type、 elementary_stream_id 以及elementary_stream_info_length 字段。 |
-| stream_type                   | 8bit  | 流类型。 stream_type 字段仅标识 PES 包中包含的基本流。 0x05 赋值被禁用。比如在GB28181中 H264为0x1B。G711A为0x90。 |
-| elementary_stream_id          | 8bit  | 基本流标识，指出该基本流所在PES分组的PES分组标题中stream_id字段的值，其中0x(C0~DF)指音频，0x(E0~EF)为视频 |
-| elementary_stream_info_length | 16bit | 指示紧随此字段的描述符长度，以字节为单位。                   |
-| es描述                        | nbit  | es信息描述                                                   |
-| CRC_32                        | 32bit | 32位CRC校验值                                                |
+| 字段                                                         | 长度  | 介绍                                                         |
+| ------------------------------------------------------------ | ----- | ------------------------------------------------------------ |
+| packet_start_code_prefix                                     | 24bit | 同跟随它的 map_stream_id 一起组成包起始码标识包的始端。固定为 0x000001。 |
+| map_stream_id                                                | 8bit  | 固定为0xBC                                                   |
+| program_stream_map_length                                    | 16bit | 表示该字段之后PSM的长度                                      |
+| current_next_indicator                                       | 1bit  | 置‘ 1’时指示发送的节目流映射为当前有效。置‘ 0’时，表示下一个节目流映射表将生效。 |
+| reserved                                                     | 2bit  | 保留位字段                                                   |
+| program_stream_map_version                                   | 5bit  | 节目流映射版本<br />整个节目流映射的版本号。每当节目流映射的定义改变时，该版本号必须增 1 模 32。 current_next_indicator 置为‘ 1’时， program_stream_map_version 应是当前有效的节目流映射的版本。 current_next_indicator 设置为‘ 0’时， program_stream_map_version 应是下一个有效的节目流映射的版本。 |
+| reserved                                                     | 7bit  | 保留位字段                                                   |
+| marker_bit                                                   | 1bit  | 标记位字段                                                   |
+| program_stream_info_length                                   | 16bit | 表示了该字段之后描述的长度                                   |
+| ps描述                                                       | nbit  | ps信息描述                                                   |
+| elementary_stream_map_length                                 | 16bit | ES流信息总长度，。它包括stream_type、 elementary_stream_id 以及elementary_stream_info_length 字段。 |
+| 下述 stream_type、<br />elementary_stream_id、<br />elementary_stream_info_length<br />重复，表示有多个流，直到PS中所有流长度完毕 |       |                                                              |
+| stream_type                                                  | 8bit  | 流类型。 stream_type 字段仅标识 PES 包中包含的基本流。 0x05 赋值被禁用。比如在GB28181中 H264为0x1B。G711A为0x90。 |
+| elementary_stream_id                                         | 8bit  | 基本流标识，指出该基本流所在PES分组的PES分组标题中stream_id字段的值，其中0x(C0~DF)指音频，0x(E0~EF)为视频，但是他们不重复，当有多个音视频流时，该值从第一个开始，每次+1<br />由于该限制，PS理论上最多同时负载32个音频流、16个视频流 |
+| elementary_stream_info_length                                | 16bit | 指示紧随此字段的描述符长度，以字节为单位。                   |
+| es描述                                                       | nbit  | es信息描述                                                   |
+| CRC_32                                                       | 32bit | 32位CRC校验值                                                |
 
 
 
