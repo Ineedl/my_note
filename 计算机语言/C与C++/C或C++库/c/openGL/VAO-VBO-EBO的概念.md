@@ -95,7 +95,7 @@ void glVertexAttribPointer(
 glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 ```
 
-* index：对应顶点着色器 
+* index：对应顶点着色器location
 
   ```
   layout(location = <index>) in 
