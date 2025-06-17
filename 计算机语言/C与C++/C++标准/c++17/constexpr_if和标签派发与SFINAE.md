@@ -26,19 +26,27 @@ else
 `例子`
 
 ```c++
-#include <type_traits>
-#include <iostream>
-
 template <typename T>
-typename std::enable_if<std::is_integral<T>::value, void>::type
+typename std::enable_if<std::is_integral<T>::value>::type
 print(T x) {
-    std::cout << "整数: " << x << std::endl;
+    std::cout << "整数: " << x << "\n";
 }
 
 template <typename T>
-typename std::enable_if<!std::is_integral<T>::value, void>::type
+typename std::enable_if<!std::is_integral<T>::value>::type
 print(T x) {
-    std::cout << "非整数: " << x << std::endl;
+    std::cout << "非整数: " << x << "\n";
+}
+
+
+//--------------------------------------------------新标准解决
+template<typename T>
+void print(T x) {
+    if constexpr (std::is_integral<T>::value) {
+        std::cout << "整数: " << x << "\n";
+    } else {
+        std::cout << "非整数: " << x << "\n";
+    }
 }
 ```
 
@@ -51,24 +59,26 @@ print(T x) {
 标签派发就是：**将类型特征“打标签”，然后根据标签重载函数**，从而实现编译期的静态分发。
 
 ```c++
-#include <iostream>
-#include <type_traits>
-
-template <typename T>
+//老办法解决
+template<typename T>
 void process_impl(T x, std::true_type) {
-    std::cout << x << " 是整数类型\n";
+    std::cout << "整数\n";
 }
 
-template <typename T>
+template<typename T>
 void process_impl(T x, std::false_type) {
-    std::cout << x << " 是非整数类型\n";
+    std::cout << "非整数\n";
 }
 
-template <typename T>
+
+//--------------------------------------------------新标准解决
+template<typename T>
 void process(T x) {
-    // 将 type traits 转换成标签 true_type / false_type
-    process_impl(x, std::is_integral<T>{});
+    if constexpr (std::is_integral<T>::value) {
+        std::cout << "整数\n";
+    } else {
+        std::cout << "非整数\n";
+    }
 }
-
 ```
 
