@@ -8,11 +8,7 @@ C++17 开始，`if` 和 `switch` 语句都支持在条件判断之前写一个**
 
 ### if 语句
 
-```
-cpp
-
-
-复制编辑
+```c++
 if (init-statement; condition) {
     // 条件为真时执行
 }
@@ -23,7 +19,7 @@ if (init-statement; condition) {
 
 ### switch 语句
 
-```
+```c++
 cpp
 
 
@@ -42,11 +38,7 @@ switch (init-statement; condition) {
 
 ### if 语句
 
-```
-cpp
-
-
-复制编辑
+```c++
 if (int x = foo(); x > 0) {
     std::cout << "x is positive: " << x << "\n";
 } else {
@@ -57,11 +49,7 @@ if (int x = foo(); x > 0) {
 
 ### switch 语句
 
-```
-cpp
-
-
-复制编辑
+```c++
 switch (int code = getCode(); code) {
     case 1: std::cout << "code 1\n"; break;
     case 2: std::cout << "code 2\n"; break;
