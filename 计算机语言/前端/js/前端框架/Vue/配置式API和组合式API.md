@@ -69,16 +69,6 @@ import { ref } from 'vue';
 	}
 </script>
 
-<!-- vue3写法 -->
-<script setup lang="ts">
-import { ref } from 'vue';
-let userName=ref('roy')
-let salary=15000
-function addSalary(){
-  salary.value+=1000
-}
-</script>
-
 <style scoped>
 
 </style>

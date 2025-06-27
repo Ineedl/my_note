@@ -4,42 +4,53 @@
 
 QML是一种描述用户界面的声明式语言。它将用户界面分解成一些更小的元素，这些元素能够结合成一个组件。QML语言描述了用户界面元素的形状和行为。用户界面能够使用JavaScript来提供修饰，或者增加更加复杂的逻辑。从这个角度来看它遵循HTML-JavaScript模式，但QML是被设计用来描述用户界面的，而不是文本文档。
 
+* 根元素相当于html中的最外层body体，QT提供了不同的根元素
+
 ## 例子
 
 ```
-// rectangle.qml
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Controls.Basic
 
-//导入一个指定的模块 以及其版本
-import QtQuick 2.0
-
-// 根元素 每个QML文件都需要一个根元素
-Rectangle {
+ApplicationWindow{		//相当于body体 最外层容器
     id: root
+    width: 1280
+    height:800
+    visible: true
+    title: "login UI"
+    color: "#00000000"
 
-    width: 120; height: 240
+    Rectangle{			//相当于<div> 容器标签
+            Button{
+                id: sub
+                x: password.x
+                y: password.y + password.height+10
+                width: password.width
+                height: password.height
+                text: qsTr("登录")
+                font.pixelSize: password.font.pixelSize
 
-    color: "#D8D8D8"
+                onClicked:{
+                    print("登录："+username.text)
+                }
 
-    Image {
-        id: rocket
-
-        x: (parent.width - width)/2; y: 40
-
-        source: 'assets/rocket.png'
-    }
-
-    Text {
-
-        // 通过id引用
-        y: rocket.y + rocket.height + 20
-
-        // 通过id引用
-        width: root.width
-
-        horizontalAlignment: Text.AlignHCenter
-        text: 'Rocket'
+                background: Rectangle{
+                    radius: 25
+                    color: {
+                        if(sub.down)
+                            return "#00b846"
+                        if(sub.hovered)
+                            return "#333333"
+                        return "#57b846"
+                    }
+                }
+            }    
+        }
     }
 }
+
+
 ```
 
 ## ID属性
