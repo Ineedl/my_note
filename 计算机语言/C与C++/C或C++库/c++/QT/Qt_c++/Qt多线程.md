@@ -20,21 +20,68 @@
 Qt多线程使用两种方法来创建线程
 
 * 继承QThread的方法并且重写run函数，之后通过start来启动线程。
+
+  ```c++
+  #include <QThread>
+  #include <QDebug>
+  
+  class MyThread : public QThread {
+  public:
+      void run() override {
+          // 这里写线程执行的代码
+          qDebug() << "Thread is running in a separate thread!";
+      }
+  };
+  
+  int main() {
+      MyThread thread;
+      thread.start();  // 启动线程
+      thread.wait();   // 等待线程完成
+      return 0;
+  }
+  ```
+
 * 将一个类的事件处理全部交给一个线程去处理，而不是向上面那样简单的直接使用线程。
 
->  槽函数触发后的归属问题
+  ```cpp
+  #include <QThread>
+  #include <QDebug>
+  #include <QObject>
+  
+  class Worker : public QObject {
+      Q_OBJECT
+  public slots:
+      void doWork() {
+          qDebug() << "Worker is working in a separate thread!";
+      }
+  };
+  
+  int main() {
+      QThread thread;  // 创建一个线程
+      Worker worker;   // 创建一个 Worker 对象
+  
+      worker.moveToThread(&thread);  // 将 worker 对象移到新的线程中
+  																	
+      // 在新的线程中执行 doWork() 函数
+    	//不一定非要叫doWork
+      QObject::connect(&thread, &QThread::started, &worker, &Worker::doWork);
+  
+      thread.start();  // 启动线程
+      thread.wait();   // 等待线程结束
+  
+      return 0;
+  }
+  ```
+
+### 槽函数触发后的归属问题
 
 connect函数的第五参数是默认值的情况下
 
-* 对于继承QThread的方法并且重写run函数的方法  
+* 对于继承QThread的方法并且重写run函数的方式 ，哪个线程触发的槽函数，该槽函数就是哪个线程运行。  
 
-哪个线程触发的槽函数，该槽函数就是哪个线程运行。  
+* 对于使用了转移事件处理的方式，转移了事件处理循环给线程的对象，他的槽函数一定都在对应转移后的线程中进行。
 
-* 对于使用了转移事件处理的方法
-
-转移了事件处理循环给线程的对象，他的槽函数一定都在对应转移后的线程中进行。
-
-> 返回线程句柄
+### 返回线程句柄
 
 ```c++
 [static] Qt::HANDLE QThread::currentThreadId()
@@ -44,7 +91,7 @@ connect函数的第五参数是默认值的情况下
 
 Qt::HANDLE在所有平台上被定义为void*
 
-> 线程结束时信号
+### 线程结束时信号
 
 ```c++
 [signal] void QThread::finished()
@@ -58,7 +105,7 @@ Qt::HANDLE在所有平台上被定义为void*
 
 配合一起删除线程
 
-> 线程休眠  
+### 线程休眠  
 
 ```c++
 [static] void QThread::sleep(unsigned long secs) //秒级休眠  
@@ -68,7 +115,7 @@ Qt::HANDLE在所有平台上被定义为void*
 
 这三个函数都是通过Thread::调用时会使调用线程休眠。
 
->  quit
+### quit
 
 ```c++
 [slot] void QThread::quit()  
@@ -81,7 +128,7 @@ Qt::HANDLE在所有平台上被定义为void*
 
 就是差不多是从当前窗口实例的事件循环中退出后，自动帮你退出线程。
 
-> exit
+### exit
 
 ```c++
 void QThread::exit(int returnCode = 0)
@@ -91,7 +138,7 @@ void QThread::exit(int returnCode = 0)
 
 * l注意使用转移事件处理创建线程的方法需要quit和exit来终止，不然exec()结束后，线程仍会等待事件过来。但是该方法中的线程可以使用exit与quit来终止线程中的事件循环和退出线程，但是不会中断最后一次运行的任务，那个任务必须运行完后再推出
 
->  terminate
+### terminate
 
 ```c++
 [slot] void QThread::terminate()
@@ -103,7 +150,7 @@ void QThread::exit(int returnCode = 0)
 
 不允许该函数在正常程序中使用，只有在某个线程不会影响其他线程且它无法正常终止但是的确是需要终止时调用。
 
->  wait
+### wait
 
 ```c++
 bool QThread::wait(unsigned long time = ULONG_MAX)  
@@ -115,7 +162,7 @@ bool QThread::wait(unsigned long time = ULONG_MAX)
 * 时间已经过了毫秒。如果time是ULONG_MAX(默认值)，则等待永远不会超时(线程必须从run()返回)。
 * 如果等待超时，这个函数将返回false。
 
-> moveToThread
+### moveToThread
 
 ```c++
 void QObject::moveToThread(QThread *targetThread)
@@ -126,7 +173,7 @@ void QObject::moveToThread(QThread *targetThread)
 
 如果对象有父对象，则无法移动该对象。有父对象的类的事件处理必须在父对象的事件处理循环线程中进行。
 
-> start
+### start
 
 ```c++
 [slot] void QThread::start(Priority priority = InheritPriority)
@@ -141,7 +188,7 @@ enum QThread::Priority指定系统如何调度新进程。
 对于转移了事件处理循环的方法，start将会开启这个事件循环调度。  
 如果仅仅创建且转移了事件处理循环但是没有调用start，则相当于没有创建线程。
 
-> finished
+### finished
 
 ```c++
 [signal] void QThread::finished()
@@ -154,7 +201,7 @@ QT线程结束后会发送的信号。
 
 ## QMutex
 
-> 构造函数
+### 构造函数
 
 ```c++
 QMutex::QMutex(RecursionMode mode = NonRecursive)
@@ -166,7 +213,7 @@ QReadWriteLock::Recursive == 1 允许多次上锁，并且多次unlock解锁
 
 QReadWriteLock::NonRecursive == 0 不允许多次上锁
 
-> lock
+### lock
 
 ```c++
 void QMutex::lock() 
@@ -174,7 +221,7 @@ void QMutex::lock()
 
 上锁  
 
-> unlock
+### unlock
 
 ```c++
 void QMutex::unlock()
@@ -182,7 +229,7 @@ void QMutex::unlock()
 
 解锁
 
-> tryLock
+### tryLock
 
 ```c++
 bool QMutex::tryLock(int timeout = 0)  
@@ -191,7 +238,7 @@ bool QMutex::tryLock(int timeout = 0)
 timeout => 0 一段时间内尝试上锁  
 timeout < 0 永远等待直到可以上锁
 
-> isRecursive
+### isRecursive
 
 ```c++
 bool QMutex::isRecursive()
@@ -204,7 +251,7 @@ bool QMutex::isRecursive()
 
 该锁一般被用作临时锁，构造时传入锁对象，析构时自动释放锁，在许多场合很好用。
 
-> 构造函数  
+### 构造函数  
 
 ```c++
 QMutexLocker::QMutexLocker(QMutex *mutex)
@@ -212,13 +259,13 @@ QMutexLocker::QMutexLocker(QMutex *mutex)
 
 传入锁并上锁，并在该对象销毁时解锁。  
 
-> 返回构造该对象时传入的锁对象
+### 返回构造该对象时传入的锁对象
 
 ```c++
 QMutex *QMutexLocker::mutex() const
 ```
 
-> relock
+### relock
 
 ```c++
 void QMutexLocker::relock()
@@ -228,7 +275,7 @@ void QMutexLocker::relock()
 
 该函数把传入的锁重新上锁
 
-> unlock
+### unlock
 
 ```c++
 void QMutexLocker::unlock()
@@ -246,7 +293,7 @@ void QMutexLocker::unlock()
 
 * 写上锁操作在等待序列中的优先级是大于读上锁操作的，在序列中永远优先处理写操作。  
 
-> 构造函数  
+### 构造函数  
 
 ```c++
 QReadWriteLock::QReadWriteLock(RecursionMode recursionMode = NonRecursive)
@@ -260,19 +307,19 @@ QReadWriteLock::NonRecursive == 0 不允许多次上锁
 
 * 注意读锁之间的允许通过原理并不是重复上锁
 
-> 读上锁
+### 读上锁
 
 ```c++
 void QReadWriteLock::lockForRead() 
 ```
 
-> 写上锁
+### 写上锁
 
 ```c++
 void QReadWriteLock::lockForWrite()
 ```
 
->尝试读上锁
+### 尝试读上锁
 
 ```c++
 bool QReadWriteLock::tryLockForRead(int timeout)
@@ -281,7 +328,7 @@ bool QReadWriteLock::tryLockForWrite()
 
 会被写锁阻塞
 
-> 尝试写上锁
+### 尝试写上锁
 
 ```c++
 bool QReadWriteLock::tryLockForWrite()
@@ -290,7 +337,7 @@ bool QReadWriteLock::tryLockForWrite(int timeout)
 
 会被读和写锁阻塞
 
-> 解锁  
+### 解锁  
 
 ```c++
 void QReadWriteLock::unlock()
@@ -301,7 +348,7 @@ void QReadWriteLock::unlock()
 
 信号量就相当于是一个可以多次上锁的锁。
 
-> 构造函数  
+### 构造函数  
 
 ```c++
 QSemaphore::QSemaphore(int n = 0)  
@@ -309,7 +356,7 @@ QSemaphore::QSemaphore(int n = 0)
 
 创建一个新的信号量，并初始化它保护的资源数量为n(默认为0)。
 
-> acquire
+### acquire
 
 ```c++
 void QSemaphore::acquire(int n = 1)  
@@ -317,7 +364,7 @@ void QSemaphore::acquire(int n = 1)
 
 试图获取由信号量保护的n个资源。如果n > available()，这个调用将阻塞，直到有足够的资源可用。
 
-> available
+### available
 
 ```c++
 int QSemaphore::available() const
@@ -325,7 +372,7 @@ int QSemaphore::available() const
 
 返回信号量当前可用的资源数量。
 
-> release
+### release
 
 ```c++
 void QSemaphore::release(int n = 1)
@@ -335,7 +382,7 @@ void QSemaphore::release(int n = 1)
 
 如果n>available()，则更新剩余信号量为n。
 
-> tryAcquire
+### tryAcquire
 
 ```c++
 bool QSemaphore::tryAcquire(int n = 1)
@@ -343,3 +390,39 @@ bool QSemaphore::tryAcquire(int n, int timeout)
 ```
 
 试图获得n个信号量。
+
+## 线程池
+
+```c++
+#include <QRunnable>
+#include <QDebug>
+//继承QRunnable表示是一个任务类
+class MyTask : public QRunnable {
+public:
+    void run() override {
+        // 这里写线程要执行的任务
+        qDebug() << "Task is running in thread:" << QThread::currentThreadId();
+    }
+};
+```
+
+```c++
+#include <QCoreApplication>
+#include <QThreadPool>
+#include <QRunnable>
+#include <QDebug>
+
+int main(int argc, char *argv[]) {
+    QCoreApplication a(argc, argv);
+    // 获取全局线程池实例
+    QThreadPool *threadPool = QThreadPool::globalInstance();
+    // 创建任务对象
+    MyTask *task = new MyTask();
+    // 向线程池提交任务
+    threadPool->start(task);
+    // 等待任务完成
+    threadPool->waitForDone();
+    return a.exec();
+}
+```
+
