@@ -30,10 +30,10 @@ H.264原始码流(裸流)是由⼀个接⼀个NALU组成，它的功能分为两
 
 `startcode使用场景`
 
-1. 包含sps,pps的NALU前面要加zero_byte（4字节）。
+1. 包含sps,pps的NALU前面要加zero_byte（4字节）。（4字节zero_byte为 00 00 00 01，3字节没zero_byte为00 00 01）
 2. 当一帧被分为多个slice时，首个NALU前面要加zero_byte。也就是，当一个完整的帧被编为多个slice的时候，除掉第一个NALU，剩下的都用3字节的，其余的都是4字节。
 
-P1(slice0) 、P1(slice1)同理。
+   第 1 个 P 帧（预测帧）的slice0 、和第一个P帧的 slice1。也是一样的
 
 ## NALU负载数据流形式
 
