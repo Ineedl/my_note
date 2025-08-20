@@ -21,7 +21,7 @@ singalStar("hello", "world", 24)
 
 双星号参数把接收的参数合并为一个字典。
 
-* 可以使用 \* *加带括号的字典将字典传入带 \* 的参数重
+* 可以使用 \*\ *加带括号的字典将字典传入带 \* 的参数重
 
 例:
 
@@ -33,3 +33,7 @@ def singalStar(common, **rest):
 #'world'以及其后面的参数值会被组成为一个字典传递给rest    
 singalStar("hello", x="world", y=24)
 ```
+
+
+
+## 

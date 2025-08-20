@@ -37,15 +37,15 @@ factorial=log(factorial(10))
 
 ```python
 def log(prefix):
-    def log_decorator(f):
-        #args按顺序接受了装饰函数的参数，并组合成一个元组
-        #kw 以map的方式接受了装饰函数的参数，并组合成一个字典
-        def wrapper(*args, **kw):
-            print(args)
-            print(kw)
-            print('[{}] {}()...'.format(prefix, f.__name__))
-            return f(*args, **kw)
-        return wrapper
+def log_decorator(f):
+    #args按顺序接受了装饰函数的参数，并组合成一个元组
+    #kw 以map的方式接受了装饰函数的参数，并组合成一个字典
+    def wrapper(*args, **kw):
+        print(args)
+        print(kw)
+        print('[{}] {}()...'.format(prefix, f.__name__))
+        return f(*args, **kw)
+    return wrapper
 return log_decorator
 
 @log('DEBUG')
