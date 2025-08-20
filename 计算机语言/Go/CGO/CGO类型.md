@@ -187,7 +187,23 @@ Go中，可以通过`C.struct_xxx`来访问C语言中定义的`struct xxx`结构
 ```go
 /*
 struct A {
+    int tmp;
+};
+*/
+import "C"
+import "fmt"
+
+func main() {
+    var a C.struct_A
+    fmt.Println(a.tmp)
+}
+
+
+/*
+struct A {
     int type; // type 是 Go 语言的关键字
+    			//关键字名字的c成员变量 使用_+名字访问
+    			//此处为_type
 };
 */
 import "C"
