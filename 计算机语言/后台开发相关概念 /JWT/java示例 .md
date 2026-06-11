@@ -1,36 +1,3 @@
-## JWT
-
-JSON Web Token
-
-* JWT不应该用来放私密数据，因为Base64编码是可逆的。
-
-`结构组成`
-
-* 标头(Header):通常由两部分组成，令牌的类型与签名算法(比如HMAC SHA256)，他会被 Base64 编码为JWT的第一部分。
-* 有效载荷(Payload):其中包含声明。声明是有关实体和其他数据的声明，他会被Base64编码为JWT的第二部分。
-* 签名(Signature):Signature使用编码后的Header与Payload以及一个密钥、然后使用header中指定的签名算法进行签名、其作用是保证JWT中途被篡改能感觉出来。
-
-`例子`
-
-```json
-//header
-{
-  "alg":"HS256",
-  "type":"JWT"
-}
-
-//Payload
-{
-  "id":123456,
-  "name":"Tom",
-  "admin":true
-}
-
-//Signature
-//加入使用HS256签名
-Signature = HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(paylod),secret);
-```
-
 ## 简单实例
 
 ```xml

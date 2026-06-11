@@ -12,7 +12,7 @@
 
 `例图`
 
-![](/Users/jiahui/gitDir/my_note/数据库/mysql/mysql索引深入/image/two.jpg)
+![](./image/two.jpg)
 
 组合索引，在B+树，是按列的顺序在节点中排序索引的，即满足以下规则：
 
